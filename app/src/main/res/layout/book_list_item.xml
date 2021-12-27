@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/book_item"-->
+<!--    android:layout_width="fill_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="6dip">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/book_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:text="@string/book_title"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_margin="@dimen/small_padding"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/book_author"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="26dip"-->
+<!--        android:ellipsize="marquee"-->
+<!--        android:singleLine="true"-->
+<!--        android:text="@string/book_author"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_margin="@dimen/small_padding"/>-->
+
+<!--</LinearLayout>-->
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/book_item"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip">
+
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:text="@string/book_title"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/book_author"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/book_author"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>
