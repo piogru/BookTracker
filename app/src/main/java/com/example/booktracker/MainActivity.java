@@ -55,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
-                startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE);
+//                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
+//                startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE);
+                Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
+//                startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE);
+                startActivity(intent);
             }
 
         });
