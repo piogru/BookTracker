@@ -11,12 +11,15 @@ public class BookSearch implements Serializable {
     private String title;
     @SerializedName("author_name")
     private List<String> authors;
+    @SerializedName("number_of_pages_median")
+    private String pageCount;
     @SerializedName("cover_i")
     private String cover;
 
-    public BookSearch(String title, List<String> authors, String cover) {
+    public BookSearch(String title, List<String> authors, String pageCount, String cover) {
         this.title = title;
         this.authors = authors;
+        this.pageCount = pageCount;
         this.cover = cover;
     }
 
@@ -42,5 +45,13 @@ public class BookSearch implements Serializable {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public String getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(String pageCount) {
+        this.pageCount = pageCount;
     }
 }

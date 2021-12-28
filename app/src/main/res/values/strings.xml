@@ -23,4 +23,6 @@
     <string name="book_added">Book added</string>
     <string name="book_edited">Book edited</string>
     <string name="book_deleted">Book deleted</string>
+
+    <string name="start_reading">Start reading</string>
 </resources>
