@@ -9,16 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.booktracker.book.Book;
-import com.example.booktracker.book.BookViewModel;
+import com.example.booktracker.database.entities.Book;
+import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.booksearch.BookSearch;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
-import java.util.List;
 
 public class AddBooksActivity extends AppCompatActivity {
 

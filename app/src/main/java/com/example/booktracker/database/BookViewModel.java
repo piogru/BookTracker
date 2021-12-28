@@ -1,9 +1,11 @@
-package com.example.booktracker.book;
+package com.example.booktracker.database;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.booktracker.database.entities.Book;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.booktracker.book;
+package com.example.booktracker.database;
 
 import android.content.Context;
 
@@ -9,10 +9,14 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.booktracker.database.entities.Author;
+import com.example.booktracker.database.entities.Book;
+import com.example.booktracker.database.entities.BookAuthorCrossRef;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class}, version = 1, exportSchema = false)
+@Database(entities = {Book.class, Author.class, BookAuthorCrossRef.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverters.class})
 public abstract class BookDatabase extends RoomDatabase {
     public abstract BookDao bookDao();

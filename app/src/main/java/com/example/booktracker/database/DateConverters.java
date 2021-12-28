@@ -1,4 +1,4 @@
-package com.example.booktracker.book;
+package com.example.booktracker.database;
 
 import androidx.room.TypeConverter;
 

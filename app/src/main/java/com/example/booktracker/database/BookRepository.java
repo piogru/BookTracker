@@ -1,8 +1,10 @@
-package com.example.booktracker.book;
+package com.example.booktracker.database;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+
+import com.example.booktracker.database.entities.Book;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class BookRepository {
     BookRepository(Application application) {
         BookDatabase database = BookDatabase.getDatabase(application);
         bookDao = database.bookDao();
-        books = bookDao.findAll();
+        books = bookDao.findAllBooks();
     }
 
     LiveData<List<Book>> findAllBooks() {
@@ -22,19 +24,19 @@ public class BookRepository {
 
     void insert(Book book) {
         BookDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.insert(book);
+            bookDao.insertBook(book);
         });
     }
 
     void update(Book book) {
         BookDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.update(book);
+            bookDao.updateBook(book);
         });
     }
 
     void delete(Book book) {
         BookDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.delete(book);
+            bookDao.deleteBook(book);
         });
     }
 }

@@ -1,31 +1,29 @@
-package com.example.booktracker.book;
+package com.example.booktracker.database.entities;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
-@Entity(tableName = "book")
+@Entity(tableName = "book",
+        indices = {@Index(value = {"title"}, unique = true)})
 public class Book {
 
     @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private Long bookId;
     private String title;
     private String author;
     private int pageCount;
     private Date startDate;
     private String cover;
 
-    public Long getId() {
-        return id;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {

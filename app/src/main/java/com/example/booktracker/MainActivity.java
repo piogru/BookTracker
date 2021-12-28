@@ -1,13 +1,10 @@
 package com.example.booktracker;
 
-import static com.example.booktracker.AddBooksActivity.EXTRA_BOOK_OBJECT;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -25,8 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.booktracker.book.Book;
-import com.example.booktracker.book.BookViewModel;
+import com.example.booktracker.database.entities.Book;
+import com.example.booktracker.database.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
