@@ -1,14 +1,17 @@
 package com.example.booktracker;
 
+import static com.example.booktracker.AddBooksActivity.EXTRA_BOOK_OBJECT;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,11 +38,7 @@ public class MainActivity extends AppCompatActivity {
 //    private ActivityMainBinding binding;
 
     private BookViewModel bookViewModel;
-
     private Book editedBook;
-
-    public static final int NEW_BOOK_ACTIVITY_REQUEST_CODE = 1;
-    public static final int EDIT_BOOK_ACTIVITY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
-                startActivityForResult(intent, NEW_BOOK_ACTIVITY_REQUEST_CODE);
+                Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
+                activityResultLaunch.launch(intent);
             }
 
         });
@@ -99,30 +98,17 @@ public class MainActivity extends AppCompatActivity {
 //                || super.onSupportNavigateUp();
 //    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == NEW_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Book book = new Book(data.getStringExtra(EditBookActivity.EXTRA_EDIT_BOOK_TITLE),
-                    data.getStringExtra(EditBookActivity.EXTRA_EDIT_BOOK_AUTHOR));
-            bookViewModel.insert(book);
-            Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_added),
-                    Snackbar.LENGTH_LONG).show();
-        } else if (requestCode == EDIT_BOOK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            editedBook.setTitle(data.getStringExtra(EditBookActivity.EXTRA_EDIT_BOOK_TITLE));
-            editedBook.setAuthor(data.getStringExtra(EditBookActivity.EXTRA_EDIT_BOOK_AUTHOR));
-            bookViewModel.update(editedBook);
-            editedBook = null;
-            Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_edited),
-                    Snackbar.LENGTH_LONG).show();
-        } else {
-            Snackbar.make(findViewById(R.id.coordinator_layout),
-                    getString(R.string.book_not_saved),
-                    Snackbar.LENGTH_LONG)
-                    .show();
-        }
-    }
+    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == 100) {
+                    Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_added),
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
 
     private class BookHolder extends RecyclerView.ViewHolder {
         private TextView bookTitleTextView;
@@ -144,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             });
             bookItem.setOnClickListener(v -> {
-                editedBook = book;
-                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
-                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_TITLE, bookTitleTextView.getText());
-                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_AUTHOR, bookAuthorTextView.getText());
-                startActivityForResult(intent, EDIT_BOOK_ACTIVITY_REQUEST_CODE);
+//                editedBook = book;
+//                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
+//                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_TITLE, bookTitleTextView.getText());
+//                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_AUTHOR, bookAuthorTextView.getText());
+//                startActivityForResult(intent, EDIT_BOOK_ACTIVITY_REQUEST_CODE);
             });
         }
 

@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,9 @@ public class Book {
     private Long id;
     private String title;
     private String author;
+    private int pageCount;
+    private Date startDate;
+    private String cover;
 
     public Long getId() {
         return id;
@@ -40,48 +44,36 @@ public class Book {
         this.author = author;
     }
 
-    public Book() {
+    public int getPageCount() {
+        return pageCount;
     }
 
-    public Book(String title, String author) {
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public Book(String title, String author, int pageCount, Date startDate, String cover) {
         this.title = title;
         this.author = author;
+        this.pageCount = pageCount;
+        this.startDate = startDate;
+        this.cover = cover;
     }
 
-//    @SerializedName("title")
-//    private String title;
-//    @SerializedName("author_name")
-//    private List<String> authors;
-//    @SerializedName("cover_i")
-//    private String cover;
-//
-//    public Book(String title, List<String> authors, String cover) {
-//        this.title = title;
-//        this.authors = authors;
-//        this.cover = cover;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public List<String> getAuthors() {
-//        return authors;
-//    }
-//
-//    public void setAuthors(List<String> authors) {
-//        this.authors = authors;
-//    }
-//
-//    public String getCover() {
-//        return cover;
-//    }
-//
-//    public void setCover(String cover) {
-//        this.cover = cover;
-//    }
 }

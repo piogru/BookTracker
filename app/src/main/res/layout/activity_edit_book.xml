@@ -36,5 +36,5 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_200"
         android:text="@string/button_save"
-        />
+    />
 </LinearLayout>
