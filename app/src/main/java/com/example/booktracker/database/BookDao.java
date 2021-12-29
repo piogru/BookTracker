@@ -64,7 +64,10 @@ public abstract class BookDao {
     abstract public LiveData<List<Book>> findAllBooks();
 
     @Query("SELECT * FROM book WHERE title LIKE :title")
-    abstract public List<Book> findBookWithTitle(String title);
+    abstract public List<Book> findBooksByTitle(String title);
+
+    @Query("SELECT * FROM book WHERE title = :title;")
+    abstract public LiveData<Book> findBookWithTitle(String title);
 
     @Transaction
     @Query("SELECT * FROM Book")

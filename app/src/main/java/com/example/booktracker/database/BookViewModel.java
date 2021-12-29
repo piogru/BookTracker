@@ -32,6 +32,9 @@ public class BookViewModel extends AndroidViewModel {
     public LiveData<List<BookWithAuthors>> findAllBooksWithAuthors() {
         return booksWithAuthors;
     }
+    public LiveData<Book> findBookWithTitle(String title) {
+        return bookRepository.findBookWithTitle(title);
+    }
 
 //    public void insert(BookWithAuthors book) {
 //        Long bookID = bookRepository.insert(book.book);

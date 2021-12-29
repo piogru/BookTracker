@@ -157,6 +157,11 @@ public class BookSearchActivity extends AppCompatActivity {
                         setResult(100, replyIntent);
 
                         finish();
+                    } else if(result.getResultCode() == 110) {
+                        Intent replyIntent = new Intent();
+                        setResult(110, replyIntent);
+
+                        finish();
                     }
                 }
             });

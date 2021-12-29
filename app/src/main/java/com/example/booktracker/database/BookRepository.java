@@ -29,6 +29,10 @@ public class BookRepository {
         return booksWithAuthors;
     }
 
+    LiveData<Book> findBookWithTitle(String title) {
+        return bookDao.findBookWithTitle(title);
+    }
+
     void insertBookWithAuthors(Book book, List<Author> authors) {
         BookDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.insertBookWithAuthors(book, authors);

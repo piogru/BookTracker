@@ -68,32 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        authorViewModel = ViewModelProviders.of(this).get(AuthorViewModel.class);
-
-        // TODO: test
-        Author test = new Author("test", "author");
-        BookAuthorCrossRef join = new BookAuthorCrossRef(1L, 1L);
-//        authorViewModel.insert(test);
-
-
-        bookAuthorRepository = new BookAuthorRepository(getApplication());
-        bookAuthorRepository.insert(join);
-
-        authorViewModel.findAll().observe(this, new Observer<List<Author>>() {
-            @Override
-            public void onChanged(List<Author> authors) {
-                Log.d("BookTracker", authors.toString());
-            }
-        });
-
-//        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-//        bookViewModel.findAll().observe(this, new Observer<List<Book>>() {
-//            @Override
-//            public void onChanged(List<Book> books) {
-//                adapter.setBooks(books);
-//            }
-//        });
-
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         bookViewModel.findAllBooksWithAuthors().observe(this, new Observer<List<BookWithAuthors>>() {
             @Override
@@ -139,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
             public void onActivityResult(ActivityResult result) {
                 if (result.getResultCode() == 100) {
                     Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_added),
+                            Snackbar.LENGTH_LONG).show();
+                } else if (result.getResultCode() == 110) {
+                    Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_not_added),
                             Snackbar.LENGTH_LONG).show();
                 }
             }
@@ -210,20 +187,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-//        void setBooks(List<Book> books) {
-//            this.books = books;
-//            notifyDataSetChanged();
-//        }
-
         void setBooks(List<BookWithAuthors> books) {
             this.books = books;
             notifyDataSetChanged();
         }
 
-//        void setBooksWithAuthors(List<BookWithAuthors> books) {
-//            this.booksWithAuthors = books;
-//            notifyDataSetChanged();
-//        }
     }
 }
 
