@@ -11,12 +11,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.booktracker.database.AuthorViewModel;
+import com.example.booktracker.database.BookAuthorRepository;
+import com.example.booktracker.database.entities.Author;
 import com.example.booktracker.database.entities.Book;
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.booksearch.BookSearch;
+import com.example.booktracker.database.entities.BookAuthorCrossRef;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+import java.util.List;
 
 public class AddBooksActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class AddBooksActivity extends AppCompatActivity {
 
     private Date startDate;
     private BookViewModel bookViewModel;
+    private AuthorViewModel authorViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +70,36 @@ public class AddBooksActivity extends AppCompatActivity {
         final Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Book book = new Book(bookSearch.getTitle(), "static author",
+                Book book = new Book(bookSearch.getTitle(),
                         Integer.parseInt(bookSearch.getPageCount()), startDate, bookSearch.getCover());
                 bookViewModel.insert(book);
+
+//                List<String> authors = bookSearch.getAuthors();
+//                Author author;
+//
+//                for(String authorString : authors) {
+//                    author = new Author();
+//
+//                }
+
+                //create authors,
+                //create CrossRefs Book - Author
+//                long lastAuthorId;
+//
+//                Author test = new Author("test", "author");
+//                authorViewModel.insert(test);
+//                authorViewModel.getLastAuthorLive().observe(this, newAuthor -> {
+//                    lastAuthorId = newAuthor.getAuthorId();
+//                }
+////                mProductViewModel.getLastProductLive()
+//
+//                BookAuthorCrossRef join = new BookAuthorCrossRef(1L, 1L);
+//
+//
+//
+//                bookAuthorRepository = new BookAuthorRepository(getApplication());
+//                bookAuthorRepository.insert(join);
+
 
                 Intent replyIntent = new Intent();
                 setResult(100, replyIntent);

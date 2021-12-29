@@ -12,39 +12,36 @@ import androidx.room.Update;
 import com.example.booktracker.database.entities.Author;
 import com.example.booktracker.database.entities.AuthorWithBooks;
 import com.example.booktracker.database.entities.Book;
-import com.example.booktracker.database.entities.BookAuthorCrossRef;
 import com.example.booktracker.database.entities.BookWithAuthors;
 
 import java.util.List;
 
 @Dao
-public interface BookDao {
+public interface AuthorDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertBook(Book book);
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertBookAuthorCrossRef(BookAuthorCrossRef join);
+    void insertAuthor(Author author);
 
     @Update
-    public void updateBook(Book book);
+    public void updateAuthor(Author author);
 
     @Delete
-    public void deleteBook(Book book);
+    public void deleteAuthor(Author author);
 
     @Query("DELETE FROM book")
-    public void deleteAllBooks();
+    public void deleteAllAuthors();
 
-    @Query("SELECT * FROM book ORDER BY title")
-    public LiveData<List<Book>> findAllBooks();
+    @Query("SELECT * FROM author")
+    public LiveData<List<Author>> findAllAuthors();
 
-    @Query("SELECT * FROM book WHERE title LIKE :title")
-    public List<Book> findBookWithTitle(String title);
+//    @Query("SELECT * FROM book WHERE title LIKE :title")
+//    public List<Book> findAuthorWithTitle(String title);
 
     @Transaction
-    @Query("SELECT * FROM Book")
-    public LiveData<List<BookWithAuthors>> findAllBooksWithAuthors();
+    @Query("SELECT * FROM Author")
+    public List<AuthorWithBooks> getAuthorsWithBooks();
 
-
+    @Query("SELECT * FROM author ORDER BY authorId DESC LIMIT 1")
+    LiveData<Author> getLastAuthorLive();
 
 }

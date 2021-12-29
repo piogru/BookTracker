@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 @TypeConverters({DateConverters.class})
 public abstract class BookDatabase extends RoomDatabase {
     public abstract BookDao bookDao();
+    public abstract AuthorDao authorDao();
 
     private static volatile BookDatabase INSTANCE;
     public static final int NUMBER_OF_THREADS = 4;
@@ -44,7 +45,8 @@ public abstract class BookDatabase extends RoomDatabase {
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
         super.onOpen(db);
         databaseWriteExecutor.execute(() -> {
-            BookDao dao = INSTANCE.bookDao();
+            BookDao bookDao = INSTANCE.bookDao();
+            AuthorDao authorDao = INSTANCE.authorDao();
         });
         }
     };

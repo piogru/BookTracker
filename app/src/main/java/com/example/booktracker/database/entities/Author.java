@@ -18,6 +18,11 @@ public class Author {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
+
     public Long getAuthorId() {
         return authorId;
     }

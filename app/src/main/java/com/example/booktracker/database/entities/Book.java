@@ -13,7 +13,6 @@ public class Book {
     @PrimaryKey(autoGenerate = true)
     private Long bookId;
     private String title;
-    private String author;
     private int pageCount;
     private Date startDate;
     private String cover;
@@ -32,14 +31,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public int getPageCount() {
@@ -66,9 +57,8 @@ public class Book {
         this.cover = cover;
     }
 
-    public Book(String title, String author, int pageCount, Date startDate, String cover) {
+    public Book(String title, int pageCount, Date startDate, String cover) {
         this.title = title;
-        this.author = author;
         this.pageCount = pageCount;
         this.startDate = startDate;
         this.cover = cover;
