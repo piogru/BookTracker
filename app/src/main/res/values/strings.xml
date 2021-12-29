@@ -19,7 +19,7 @@
     <string name="hint_book_author">Author...</string>
 
     <string name="button_save">Save</string>
-    <string name="book_not_saved">Book not saved because there are empty fields</string>
+    <string name="book_not_added">Book already exists</string>
     <string name="book_added">Book added</string>
     <string name="book_edited">Book edited</string>
     <string name="book_deleted">Book deleted</string>

@@ -1,13 +1,10 @@
 package com.example.booktracker;
 
-import static com.example.booktracker.AddBooksActivity.EXTRA_BOOK_OBJECT;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -15,8 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,8 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.booktracker.book.Book;
-import com.example.booktracker.book.BookViewModel;
+import com.example.booktracker.database.AuthorViewModel;
+import com.example.booktracker.database.BookAuthorRepository;
+import com.example.booktracker.database.entities.Author;
+import com.example.booktracker.database.entities.Book;
+import com.example.booktracker.database.BookViewModel;
+import com.example.booktracker.database.entities.BookAuthorCrossRef;
+import com.example.booktracker.database.entities.BookWithAuthors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
     private BookViewModel bookViewModel;
     private Book editedBook;
+
+    private AuthorViewModel authorViewModel;
+
+    private BookAuthorRepository bookAuthorRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        bookViewModel.findAll().observe(this, new Observer<List<Book>>() {
+        bookViewModel.findAllBooksWithAuthors().observe(this, new Observer<List<BookWithAuthors>>() {
             @Override
-            public void onChanged(List<Book> books) {
+            public void onChanged(List<BookWithAuthors> books) {
                 adapter.setBooks(books);
             }
         });
@@ -106,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
                 if (result.getResultCode() == 100) {
                     Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_added),
                             Snackbar.LENGTH_LONG).show();
+                } else if (result.getResultCode() == 110) {
+                    Snackbar.make(findViewById(R.id.coordinator_layout), getString(R.string.book_not_added),
+                            Snackbar.LENGTH_LONG).show();
                 }
             }
         });
@@ -113,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private class BookHolder extends RecyclerView.ViewHolder {
         private TextView bookTitleTextView;
         private TextView bookAuthorTextView;
-        private Book book;
+        private BookWithAuthors book;
 
         public BookHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.book_list_item, parent, false));
@@ -131,22 +142,25 @@ public class MainActivity extends AppCompatActivity {
             });
             bookItem.setOnClickListener(v -> {
 //                editedBook = book;
-//                Intent intent = new Intent(MainActivity.this, EditBookActivity.class);
-//                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_TITLE, bookTitleTextView.getText());
-//                intent.putExtra(EditBookActivity.EXTRA_EDIT_BOOK_AUTHOR, bookAuthorTextView.getText());
+                Intent intent = new Intent(MainActivity.this, BookDetailsActivity.class);
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_TITLE, bookTitleTextView.getText());
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_AUTHOR, bookAuthorTextView.getText());
 //                startActivityForResult(intent, EDIT_BOOK_ACTIVITY_REQUEST_CODE);
+                activityResultLaunch.launch(intent);
             });
         }
 
-        public void bind(Book book) {
-            bookTitleTextView.setText(book.getTitle());
-            bookAuthorTextView.setText(book.getAuthor());
+        public void bind(BookWithAuthors book) {
+            bookTitleTextView.setText(book.book.getTitle());
+            bookAuthorTextView.setText(TextUtils.join(", ", book.authors));
             this.book = book;
         }
     }
 
     private class BookAdapter extends RecyclerView.Adapter<BookHolder> {
-        private List<Book> books;
+//        private List<Book> books;
+        private List<BookWithAuthors> books;
+//        private List<BookWithAuthors> booksWithAuthors;
 
         @NonNull
         @Override
@@ -157,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull BookHolder holder, int position) {
             if (books != null) {
-                Book book = books.get(position);
+                BookWithAuthors book = books.get(position);
                 holder.bind(book);
             } else {
                 Log.d("MainActivity", "No books");
@@ -173,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        void setBooks(List<Book> books) {
+        void setBooks(List<BookWithAuthors> books) {
             this.books = books;
             notifyDataSetChanged();
         }
+
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.booktracker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,14 +10,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.booktracker.book.Book;
-import com.example.booktracker.book.BookViewModel;
+import com.example.booktracker.database.AuthorViewModel;
+import com.example.booktracker.database.BookAuthorRepository;
+import com.example.booktracker.database.entities.Author;
+import com.example.booktracker.database.entities.Book;
+import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.booksearch.BookSearch;
+import com.example.booktracker.database.entities.BookAuthorCrossRef;
+import com.example.booktracker.database.entities.BookWithAuthors;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +43,7 @@ public class AddBooksActivity extends AppCompatActivity {
 
     private Date startDate;
     private BookViewModel bookViewModel;
+    private AuthorViewModel authorViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +74,46 @@ public class AddBooksActivity extends AppCompatActivity {
             bookCover.setImageResource(R.drawable.ic_book_black_24dp);
         }
 
+        Book book = null;
+
+        LifecycleOwner activity = this;
+
         final Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Book book = new Book(bookSearch.getTitle(), "static author",
-                        Integer.parseInt(bookSearch.getPageCount()), startDate, bookSearch.getCover());
-                bookViewModel.insert(book);
+                bookViewModel.findBookWithTitle(bookSearch.getTitle()).observe(activity, new Observer<Book>() {
+                    @Override
+                    public void onChanged(Book test) {
+                        if(test != null) {
+                            Intent replyIntent = new Intent();
+                            setResult(110, replyIntent);
+                            finish();
+                        } else {
+                            Book book = new Book(bookSearch.getTitle(),
+                                    Integer.parseInt(bookSearch.getPageCount()),
+                                    startDate, bookSearch.getCover());
 
-                Intent replyIntent = new Intent();
-                setResult(100, replyIntent);
+                            List<String> authorStrings = bookSearch.getAuthors();
+                            List<Author> authors = new ArrayList<Author>();
+                            Author author;
+                            String[] temp;
 
-                finish();
+                            for(String authorString : authorStrings) {
+                                temp = authorString.split(" ", 2);
+                                author = new Author(temp[0], temp[1]);
+                                authors.add(author);
+                            }
+
+                            bookViewModel.insertBookWithAuthors(book, authors);
+
+
+                            Intent replyIntent = new Intent();
+                            setResult(100, replyIntent);
+
+                            finish();
+                        }
+                    }
+                });
             }
         });
     }

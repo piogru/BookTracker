@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.booktracker.book.Book;
 import com.example.booktracker.booksearch.BookContainer;
 import com.example.booktracker.booksearch.BookSearch;
 import com.example.booktracker.booksearch.BookService;
@@ -157,6 +155,11 @@ public class BookSearchActivity extends AppCompatActivity {
                     if (result.getResultCode() == 100) {
                         Intent replyIntent = new Intent();
                         setResult(100, replyIntent);
+
+                        finish();
+                    } else if(result.getResultCode() == 110) {
+                        Intent replyIntent = new Intent();
+                        setResult(110, replyIntent);
 
                         finish();
                     }
