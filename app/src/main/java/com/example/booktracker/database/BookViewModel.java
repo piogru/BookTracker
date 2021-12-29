@@ -41,6 +41,10 @@ public class BookViewModel extends AndroidViewModel {
 //        }
 //    }
 
+    public void insertBookWithAuthors(Book book, List<Author> authors) {
+        bookRepository.insertBookWithAuthors(book, authors);
+    }
+
     public void insert(Book book) {
         bookRepository.insert(book);
     }

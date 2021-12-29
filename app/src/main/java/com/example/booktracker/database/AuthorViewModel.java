@@ -37,7 +37,4 @@ public class AuthorViewModel extends AndroidViewModel {
         authorRepository.delete(author);
     }
 
-    public LiveData<Author> getLastAuthorLive(){
-        return authorRepository.getLastAuthorLive();
-    }
 }

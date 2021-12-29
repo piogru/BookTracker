@@ -20,7 +20,7 @@ import java.util.List;
 public interface AuthorDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAuthor(Author author);
+    Long insertAuthor(Author author);
 
     @Update
     public void updateAuthor(Author author);
@@ -40,8 +40,4 @@ public interface AuthorDao {
     @Transaction
     @Query("SELECT * FROM Author")
     public List<AuthorWithBooks> getAuthorsWithBooks();
-
-    @Query("SELECT * FROM author ORDER BY authorId DESC LIMIT 1")
-    LiveData<Author> getLastAuthorLive();
-
 }

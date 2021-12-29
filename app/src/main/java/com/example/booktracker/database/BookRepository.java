@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.booktracker.database.entities.Author;
 import com.example.booktracker.database.entities.Book;
 import com.example.booktracker.database.entities.BookWithAuthors;
 
@@ -26,6 +27,12 @@ public class BookRepository {
     }
     LiveData<List<BookWithAuthors>> findAllBooksWithAuthors() {
         return booksWithAuthors;
+    }
+
+    void insertBookWithAuthors(Book book, List<Author> authors) {
+        BookDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.insertBookWithAuthors(book, authors);
+        });
     }
 
     void insert(Book book) {

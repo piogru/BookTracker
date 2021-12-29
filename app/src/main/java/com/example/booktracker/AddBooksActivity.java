@@ -20,6 +20,7 @@ import com.example.booktracker.booksearch.BookSearch;
 import com.example.booktracker.database.entities.BookAuthorCrossRef;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,34 +72,21 @@ public class AddBooksActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Book book = new Book(bookSearch.getTitle(),
-                        Integer.parseInt(bookSearch.getPageCount()), startDate, bookSearch.getCover());
-                bookViewModel.insert(book);
+                        Integer.parseInt(bookSearch.getPageCount()),
+                        startDate, bookSearch.getCover());
 
-//                List<String> authors = bookSearch.getAuthors();
-//                Author author;
-//
-//                for(String authorString : authors) {
-//                    author = new Author();
-//
-//                }
+                List<String> authorStrings = bookSearch.getAuthors();
+                List<Author> authors = new ArrayList<Author>();
+                Author author;
+                String[] temp;
 
-                //create authors,
-                //create CrossRefs Book - Author
-//                long lastAuthorId;
-//
-//                Author test = new Author("test", "author");
-//                authorViewModel.insert(test);
-//                authorViewModel.getLastAuthorLive().observe(this, newAuthor -> {
-//                    lastAuthorId = newAuthor.getAuthorId();
-//                }
-////                mProductViewModel.getLastProductLive()
-//
-//                BookAuthorCrossRef join = new BookAuthorCrossRef(1L, 1L);
-//
-//
-//
-//                bookAuthorRepository = new BookAuthorRepository(getApplication());
-//                bookAuthorRepository.insert(join);
+                for(String authorString : authorStrings) {
+                    temp = authorString.split(" ", 2);
+                    author = new Author(temp[0], temp[1]);
+                    authors.add(author);
+                }
+
+                bookViewModel.insertBookWithAuthors(book, authors);
 
 
                 Intent replyIntent = new Intent();

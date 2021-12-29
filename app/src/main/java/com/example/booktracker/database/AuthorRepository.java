@@ -39,8 +39,4 @@ public class AuthorRepository {
             authorDao.deleteAuthor(author);
         });
     }
-
-    public LiveData<Author> getLastAuthorLive(){
-        return authorDao.getLastAuthorLive();
-    }
 }
