@@ -13,36 +13,21 @@ import java.util.List;
 
 public class BookViewModel extends AndroidViewModel {
     private BookRepository bookRepository;
-    private AuthorRepository authorRepository;
-    private BookAuthorRepository bookAuthorRepository;
 
-//    private LiveData<List<Book>> books;
     private LiveData<List<BookWithAuthors>> booksWithAuthors;
 
     public BookViewModel(@NonNull Application application) {
         super(application);
         bookRepository = new BookRepository(application);
-//        books = bookRepository.findAllBooks();
         booksWithAuthors = bookRepository.findAllBooksWithAuthors();
     }
 
-//    public LiveData<List<Book>> findAll() {
-//        return books;
-//    }
     public LiveData<List<BookWithAuthors>> findAllBooksWithAuthors() {
         return booksWithAuthors;
     }
     public LiveData<Book> findBookWithTitle(String title) {
         return bookRepository.findBookWithTitle(title);
     }
-
-//    public void insert(BookWithAuthors book) {
-//        Long bookID = bookRepository.insert(book.book);
-//
-//        for(Author author : book.authors) {
-//            authorRepository.insert(author);
-//        }
-//    }
 
     public void insertBookWithAuthors(Book book, List<Author> authors) {
         bookRepository.insertBookWithAuthors(book, authors);

@@ -76,37 +76,6 @@ public class AddBooksActivity extends AppCompatActivity {
 
         Book book = null;
 
-//        bookViewModel.findBookWithTitle(book.getTitle()).observe(this, new Observer<Book>() {
-//            @Override
-//            public void onChanged(Book book) {
-//                if(book != null) {
-//                    Intent replyIntent = new Intent();
-//                    setResult(110, replyIntent);
-//                    finish();
-//                } else {
-//                    List<String> authorStrings = bookSearch.getAuthors();
-//                    List<Author> authors = new ArrayList<Author>();
-//                    Author author;
-//                    String[] temp;
-//
-//                    for(String authorString : authorStrings) {
-//                        temp = authorString.split(" ", 2);
-//                        author = new Author(temp[0], temp[1]);
-//                        authors.add(author);
-//                    }
-//
-//                    bookViewModel.insertBookWithAuthors(book, authors);
-//
-//
-//                    Intent replyIntent = new Intent();
-//                    setResult(100, replyIntent);
-//
-//                    finish();
-//                }
-//
-//            }
-//        });
-
         LifecycleOwner activity = this;
 
         final Button buttonSave = findViewById(R.id.button_save);
@@ -145,33 +114,6 @@ public class AddBooksActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
-//                if(test != null) {
-//                    Intent replyIntent = new Intent();
-//                    setResult(110, replyIntent);
-//                    finish();
-//                }
-
-//                List<String> authorStrings = bookSearch.getAuthors();
-//                List<Author> authors = new ArrayList<Author>();
-//                Author author;
-//                String[] temp;
-//
-//                for(String authorString : authorStrings) {
-//                    temp = authorString.split(" ", 2);
-//                    author = new Author(temp[0], temp[1]);
-//                    authors.add(author);
-//                }
-//
-//                bookViewModel.insertBookWithAuthors(book, authors);
-//
-//
-//                Intent replyIntent = new Intent();
-//                setResult(100, replyIntent);
-//
-//                finish();
             }
         });
     }
