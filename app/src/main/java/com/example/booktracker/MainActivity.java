@@ -38,6 +38,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String IMAGE_URL_BASE = "http://covers.openlibrary.org/b/id/";
+
     private AppBarConfiguration appBarConfiguration;
 //    private ActivityMainBinding binding;
 
@@ -141,11 +143,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             });
             bookItem.setOnClickListener(v -> {
-//                editedBook = book;
                 Intent intent = new Intent(MainActivity.this, BookDetailsActivity.class);
                 intent.putExtra(BookDetailsActivity.EXTRA_BOOK_TITLE, bookTitleTextView.getText());
                 intent.putExtra(BookDetailsActivity.EXTRA_BOOK_AUTHOR, bookAuthorTextView.getText());
-//                startActivityForResult(intent, EDIT_BOOK_ACTIVITY_REQUEST_CODE);
+
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_PAGE_COUNT, book.book.getPageCount());
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_START_DATE, book.book.getStartDate().getTime());
+                if(book.book.getEndDate() != null){
+                    intent.putExtra(BookDetailsActivity.EXTRA_BOOK_END_DATE, book.book.getEndDate().getTime());
+                }
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_TIME_SPENT, book.book.getTimeSpent());
+                intent.putExtra(BookDetailsActivity.EXTRA_BOOK_COVER, book.book.getCover());
+
                 activityResultLaunch.launch(intent);
             });
         }

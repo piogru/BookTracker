@@ -15,6 +15,8 @@ public class Book {
     private String title;
     private int pageCount;
     private Date startDate;
+    private int timeSpent;
+    private Date endDate;
     private String cover;
 
     public Long getBookId() {
@@ -57,10 +59,28 @@ public class Book {
         this.cover = cover;
     }
 
+    public int getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(int timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public Book(String title, int pageCount, Date startDate, String cover) {
         this.title = title;
         this.pageCount = pageCount;
         this.startDate = startDate;
+        this.endDate = null;
+        this.timeSpent = 0;
         this.cover = cover;
     }
 

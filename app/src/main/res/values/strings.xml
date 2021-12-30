@@ -25,4 +25,5 @@
     <string name="book_deleted">Book deleted</string>
 
     <string name="start_reading">Start reading</string>
+    <string name="finish_reading">Finish reading</string>
 </resources>
