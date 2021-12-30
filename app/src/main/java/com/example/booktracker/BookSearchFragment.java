@@ -1,29 +1,30 @@
 package com.example.booktracker;
 
-import static com.example.booktracker.AddBooksActivity.EXTRA_BOOK_OBJECT;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import static com.example.booktracker.AddBooksActivity.EXTRA_BOOK_OBJECT;
+import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
 
 import com.example.booktracker.booksearch.BookContainer;
 import com.example.booktracker.booksearch.BookSearch;
@@ -37,23 +38,33 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookSearchActivity extends AppCompatActivity {
+public class BookSearchFragment extends Fragment {
 
-    public static final String IMAGE_URL_BASE = "http://covers.openlibrary.org/b/id/";
+    SearchView searchView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booksearch);
+    public BookSearchFragment() {
+        // Required empty public constructor
+    }
+
+    public static BookSearchFragment newInstance() {
+        BookSearchFragment fragment = new BookSearchFragment();
+        return fragment;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.booksearch_menu, menu);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-        MenuItem searchItem = menu.findItem(R.id.menu_item_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_book_search, container, false);
+
+        searchView = view.findViewById(R.id.book_search_bar);
+//        MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+//        final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -68,10 +79,11 @@ public class BookSearchActivity extends AppCompatActivity {
             }
         });
 
-        return super.onCreateOptionsMenu(menu);
+        return view;
     }
 
     private void fetchBooksData(String query) {
+        View view = getView();
         String finalQuery = prepareQuery(query);
         BookService bookService = RetrofitInstance.getRetrofitInstance().create(BookService.class);
         Call<BookContainer> booksApiCall = bookService.findBooks(finalQuery);
@@ -84,7 +96,7 @@ public class BookSearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BookContainer> call, Throwable t) {
-                Snackbar.make(findViewById(R.id.main_view), "Something went wrong... Try later",
+                Snackbar.make(view.findViewById(R.id.main_view), "Something went wrong... Try later",
                         Snackbar.LENGTH_LONG).show();
             }
         }));
@@ -96,16 +108,33 @@ public class BookSearchActivity extends AppCompatActivity {
     }
 
     private void setupBookListView(List<BookSearch> books) {
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        View view = getView();
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         final BookAdapter adapter = new BookAdapter();
         adapter.setBooks(books);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                Activity activity = getActivity();
+                if (result.getResultCode() == 100) {
+                    Intent replyIntent = new Intent();
+                    activity.setResult(100, replyIntent);
+                    activity.finish();
+                } else if(result.getResultCode() == 110) {
+                    Intent replyIntent = new Intent();
+                    activity.setResult(110, replyIntent);
+                    activity.finish();
+                }
+            }
+        });
+
     private class BookHolder extends RecyclerView.ViewHolder {
-
-
         private TextView bookTitleTextView;
         private TextView bookAuthorTextView;
         private ImageView bookCover;
@@ -124,7 +153,7 @@ public class BookSearchActivity extends AppCompatActivity {
 
                 View itemContainer = itemView.findViewById(R.id.booksearch_item_container);
                 itemContainer.setOnClickListener(v -> {
-                    Intent intent = new Intent(BookSearchActivity.this, AddBooksActivity.class);
+                    Intent intent = new Intent(getActivity(), AddBooksActivity.class);
                     intent.putExtra(EXTRA_BOOK_OBJECT, book);
                     activityResultLaunch.launch(intent);
                 });
@@ -145,25 +174,6 @@ public class BookSearchActivity extends AppCompatActivity {
             return s != null && !s.isEmpty();
         }
     }
-
-    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == 100) {
-                        Intent replyIntent = new Intent();
-                        setResult(100, replyIntent);
-
-                        finish();
-                    } else if(result.getResultCode() == 110) {
-                        Intent replyIntent = new Intent();
-                        setResult(110, replyIntent);
-
-                        finish();
-                    }
-                }
-            });
 
     private class BookAdapter extends RecyclerView.Adapter<BookHolder> {
         private List<BookSearch> books;

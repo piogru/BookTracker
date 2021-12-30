@@ -1,38 +1,35 @@
 package com.example.booktracker;
 
+import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import com.example.booktracker.database.AuthorViewModel;
-import com.example.booktracker.database.BookAuthorRepository;
+import com.example.booktracker.booksearch.BookSearch;
+import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.Author;
 import com.example.booktracker.database.entities.Book;
-import com.example.booktracker.database.BookViewModel;
-import com.example.booktracker.booksearch.BookSearch;
-import com.example.booktracker.database.entities.BookAuthorCrossRef;
-import com.example.booktracker.database.entities.BookWithAuthors;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
-
-public class AddBooksActivity extends AppCompatActivity {
+public class AddBookFragment extends Fragment {
 
     public final static String EXTRA_BOOK_OBJECT = "EXTRA_BOOK_OBJECT";
 
@@ -45,18 +42,36 @@ public class AddBooksActivity extends AppCompatActivity {
     private Date startDate;
     private BookViewModel bookViewModel;
 
+    public AddBookFragment() {
+        // Required empty public constructor
+    }
+
+    public static AddBookFragment newInstance() {
+        AddBookFragment fragment = new AddBookFragment();
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
-        bookTitleTextView = findViewById(R.id.book_title);
-        bookAuthorTextView = findViewById(R.id.book_author);
-        bookPageCountTextView = findViewById(R.id.book_page_count);
-        bookStartDateTextView = findViewById(R.id.book_start_date);
+    }
 
-        bookCover = findViewById(R.id.book_img_cover);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_add_book, container, false);
+        Activity activity = getActivity();
 
-        BookSearch bookSearch = (BookSearch) getIntent().getSerializableExtra(EXTRA_BOOK_OBJECT);
+//        setContentView(R.layout.activity_add_book);
+        bookTitleTextView = view.findViewById(R.id.book_title);
+        bookAuthorTextView = view.findViewById(R.id.book_author);
+        bookPageCountTextView = view.findViewById(R.id.book_page_count);
+        bookStartDateTextView = view.findViewById(R.id.book_start_date);
+
+        bookCover = view.findViewById(R.id.book_img_cover);
+
+        BookSearch bookSearch = (BookSearch) activity.getIntent().getSerializableExtra(EXTRA_BOOK_OBJECT);
         startDate = new Date();
 
         bookTitleTextView.setText(bookSearch.getTitle());
@@ -67,7 +82,7 @@ public class AddBooksActivity extends AppCompatActivity {
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
 
         if (bookSearch.getCover() != null) {
-            Picasso.with(getApplicationContext())
+            Picasso.with(activity.getApplicationContext())
                     .load(IMAGE_URL_BASE + bookSearch.getCover() + "-L.jpg")
                     .placeholder(R.drawable.ic_book_black_24dp).into(bookCover);
         } else {
@@ -76,18 +91,18 @@ public class AddBooksActivity extends AppCompatActivity {
 
         Book book = null;
 
-        LifecycleOwner activity = this;
+//        LifecycleOwner activity = this;
 
-        final Button buttonSave = findViewById(R.id.button_save);
+        final Button buttonSave = view.findViewById(R.id.button_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                bookViewModel.findBookWithTitle(bookSearch.getTitle()).observe(activity, new Observer<Book>() {
+                bookViewModel.findBookWithTitle(bookSearch.getTitle()).observe((LifecycleOwner) activity, new Observer<Book>() {
                     @Override
                     public void onChanged(Book test) {
                         if(test != null) {
                             Intent replyIntent = new Intent();
-                            setResult(110, replyIntent);
-                            finish();
+                            activity.setResult(110, replyIntent);
+                            activity.finish();
                         } else {
                             Book book = new Book(bookSearch.getTitle(),
                                     Integer.parseInt(bookSearch.getPageCount()),
@@ -107,13 +122,15 @@ public class AddBooksActivity extends AppCompatActivity {
                             bookViewModel.insertBookWithAuthors(book, authors);
 
                             Intent replyIntent = new Intent();
-                            setResult(100, replyIntent);
+                            activity.setResult(100, replyIntent);
 
-                            finish();
+                            activity.finish();
                         }
                     }
                 });
             }
         });
+
+        return view;
     }
 }

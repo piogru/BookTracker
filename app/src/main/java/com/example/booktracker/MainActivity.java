@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private BookViewModel bookViewModel;
     private BookWithAuthors editedBook;
 
-//    private AppBarConfiguration appBarConfiguration;
-//    private ActivityMainBinding binding;
-//    private AuthorViewModel authorViewModel;
-//    private BookAuthorRepository bookAuthorRepository;
-
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -80,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.page_new:
 //                        Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
 //                        activityResultLaunch.launch(intent);
-                        return true;
-//                        openFragment(SmsFragment.newInstance("", ""));
 //                        return true;
+                        openFragment(BookSearchFragment.newInstance());
+                        return true;
                     case R.id.page_statistics:
-//                        openFragment(NotificationFragment.newInstance("", ""));
+//                        openFragment(StatisticsFragment.newInstance());
                         return true;
 
                 }
@@ -93,20 +88,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         openFragment(BooksFragment.newInstance());
-
-//        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-//        final BookAdapter adapter = new BookAdapter();
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-//        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-//        bookViewModel.findAllBooksWithAuthors().observe(this, new Observer<List<BookWithAuthors>>() {
-//            @Override
-//            public void onChanged(List<BookWithAuthors> books) {
-//                adapter.setBooks(books);
-//            }
-//        });
     }
 
 //    @Override

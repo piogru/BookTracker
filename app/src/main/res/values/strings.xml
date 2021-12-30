@@ -33,9 +33,11 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-<!-- menu items -->
+    <!-- menu items -->
     <string name="navigation_books">Books</string>
     <string name="navigation_statistics">Statistics</string>
     <string name="navigation_new">New</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
