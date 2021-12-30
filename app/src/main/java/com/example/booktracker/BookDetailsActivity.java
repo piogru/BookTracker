@@ -88,17 +88,14 @@ public class BookDetailsActivity extends AppCompatActivity {
             bookCover.setImageResource(R.drawable.ic_book_black_24dp);
         }
 
-//        bookTitleTextView.setText(bookSearch.getTitle());
-//        bookAuthorTextView.setText(TextUtils.join(", ", bookSearch.getAuthors()));
-//        bookPageCountTextView.setText(bookSearch.getPageCount());
-//        bookStartDateTextView.setText(startDate.toString());
-
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
 
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent replyIntent = new Intent();
+                setResult(200, replyIntent);
+                finish();
 //                if(TextUtils.isEmpty(editTitleEditText.getText())
 //                        || TextUtils.isEmpty(editTitleEditText.getText())) {
 //                    setResult(RESULT_CANCELED, replyIntent);
@@ -109,7 +106,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 //                    replyIntent.putExtra(EXTRA_BOOK_AUTHOR, author);
 //                    setResult(RESULT_OK, replyIntent);
 //                }
-                finish();
             }
         });
     }
