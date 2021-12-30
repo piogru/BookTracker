@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_books"
+        android:enabled="true"
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="@string/navigation_books"/>
+    <item
+        android:id="@+id/page_new"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/navigation_new"/>
+    <item
+        android:id="@+id/page_statistics"
+        android:enabled="true"
+        android:icon="@drawable/ic_statistics_black_24dp"
+        android:title="@string/navigation_statistics"/>
+</menu>
