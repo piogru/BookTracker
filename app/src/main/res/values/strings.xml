@@ -32,4 +32,10 @@
     <string name="book_finish_message">Are you sure you want to finish reading this book?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+
+<!-- menu items -->
+    <string name="navigation_books">Books</string>
+    <string name="navigation_statistics">Statistics</string>
+    <string name="navigation_new">New</string>
+
 </resources>

@@ -31,7 +31,9 @@ import com.example.booktracker.database.entities.Book;
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.BookAuthorCrossRef;
 import com.example.booktracker.database.entities.BookWithAuthors;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BookAuthorRepository bookAuthorRepository;
 
+    BottomNavigationView bottomNavigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +66,28 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FloatingActionButton addBookButton = findViewById(R.id.add_button);
-        addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
-                activityResultLaunch.launch(intent);
-            }
+        bottomNavigation = findViewById(R.id.bottom_navigation);
 
+        bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.page_books:
+//                        openFragment(HomeFragment.newInstance("", ""));
+                        return true;
+                    case R.id.page_new:
+                        Intent intent = new Intent(MainActivity.this, BookSearchActivity.class);
+                        activityResultLaunch.launch(intent);
+                        return true;
+//                        openFragment(SmsFragment.newInstance("", ""));
+//                        return true;
+                    case R.id.page_statistics:
+//                        openFragment(NotificationFragment.newInstance("", ""));
+                        return true;
+
+                }
+                return false;
+            }
         });
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
