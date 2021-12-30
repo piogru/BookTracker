@@ -147,23 +147,23 @@ public class BookSearchActivity extends AppCompatActivity {
     }
 
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == 100) {
-                        Intent replyIntent = new Intent();
-                        setResult(100, replyIntent);
+        new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == 100) {
+                    Intent replyIntent = new Intent();
+                    setResult(100, replyIntent);
 
-                        finish();
-                    } else if(result.getResultCode() == 110) {
-                        Intent replyIntent = new Intent();
-                        setResult(110, replyIntent);
+                    finish();
+                } else if(result.getResultCode() == 110) {
+                    Intent replyIntent = new Intent();
+                    setResult(110, replyIntent);
 
-                        finish();
-                    }
+                    finish();
                 }
-            });
+            }
+        });
 
     private class BookAdapter extends RecyclerView.Adapter<BookHolder> {
         private List<BookSearch> books;

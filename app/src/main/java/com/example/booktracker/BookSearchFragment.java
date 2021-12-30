@@ -10,13 +10,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,6 +29,7 @@ import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
 import com.example.booktracker.booksearch.BookContainer;
 import com.example.booktracker.booksearch.BookSearch;
 import com.example.booktracker.booksearch.BookService;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -63,8 +64,6 @@ public class BookSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_book_search, container, false);
 
         searchView = view.findViewById(R.id.book_search_bar);
-//        MenuItem searchItem = menu.findItem(R.id.menu_item_search);
-//        final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -116,6 +115,13 @@ public class BookSearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         new ActivityResultCallback<ActivityResult>() {
@@ -125,11 +131,23 @@ public class BookSearchFragment extends Fragment {
                 if (result.getResultCode() == 100) {
                     Intent replyIntent = new Intent();
                     activity.setResult(100, replyIntent);
-                    activity.finish();
+                    BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
+
+                    bottomNavigation.setSelectedItemId(R.id.page_books);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new BooksFragment())
+                            .addToBackStack(null)
+                            .commit();
                 } else if(result.getResultCode() == 110) {
                     Intent replyIntent = new Intent();
                     activity.setResult(110, replyIntent);
-                    activity.finish();
+
+                    BottomNavigationView bottomNavigation = getView().findViewById(R.id.bottom_navigation);
+                    bottomNavigation.setSelectedItemId(R.id.page_books);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new BooksFragment())
+                            .addToBackStack(null)
+                            .commit();;
                 }
             }
         });

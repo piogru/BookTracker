@@ -86,9 +86,14 @@ public class AddBooksActivity extends AppCompatActivity {
                     public void onChanged(Book test) {
                         if(test != null) {
                             Intent replyIntent = new Intent();
+
+                            // 110 - book already exists
                             setResult(110, replyIntent);
                             finish();
                         } else {
+                            if(bookSearch.getPageCount() == null) {
+                                bookSearch.setPageCount("0");
+                            }
                             Book book = new Book(bookSearch.getTitle(),
                                     Integer.parseInt(bookSearch.getPageCount()),
                                     startDate, bookSearch.getCover());
@@ -107,6 +112,7 @@ public class AddBooksActivity extends AppCompatActivity {
                             bookViewModel.insertBookWithAuthors(book, authors);
 
                             Intent replyIntent = new Intent();
+                            //100 - book added
                             setResult(100, replyIntent);
 
                             finish();
