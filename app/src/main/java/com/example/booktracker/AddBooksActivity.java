@@ -48,7 +48,7 @@ public class AddBooksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_details);
+        setContentView(R.layout.activity_add_book);
         bookTitleTextView = findViewById(R.id.book_title);
         bookAuthorTextView = findViewById(R.id.book_author);
         bookPageCountTextView = findViewById(R.id.book_page_count);

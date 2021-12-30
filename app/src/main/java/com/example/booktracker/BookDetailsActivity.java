@@ -74,6 +74,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         if(getIntent().hasExtra(EXTRA_BOOK_END_DATE)) {
             Date d = new Date();
             d.setTime(getIntent().getLongExtra(EXTRA_BOOK_END_DATE, -1));
+            endDateTextView.setVisibility(View.VISIBLE);
             endDateTextView.setText(d.toString());
         }
         if(getIntent().hasExtra(EXTRA_BOOK_TIME_SPENT)) {
@@ -90,23 +91,19 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
 
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent replyIntent = new Intent();
-                setResult(200, replyIntent);
-                finish();
-//                if(TextUtils.isEmpty(editTitleEditText.getText())
-//                        || TextUtils.isEmpty(editTitleEditText.getText())) {
-//                    setResult(RESULT_CANCELED, replyIntent);
-//                } else {
-//                    String title = editTitleEditText.getText().toString();
-//                    replyIntent.putExtra(EXTRA_BOOK_TITLE, title);
-//                    String author = editAuthorEditText.getText().toString();
-//                    replyIntent.putExtra(EXTRA_BOOK_AUTHOR, author);
-//                    setResult(RESULT_OK, replyIntent);
-//                }
-            }
-        });
+        // confirmation dialog
+        if(!getIntent().hasExtra(EXTRA_BOOK_END_DATE)) {
+            final Button button = findViewById(R.id.button_save);
+            button.setVisibility(View.VISIBLE);
+
+            FinishConfirmationDialogFragment confirmationDialog = new FinishConfirmationDialogFragment();
+
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    confirmationDialog.show(getSupportFragmentManager(),
+                            FinishConfirmationDialogFragment.TAG);
+                }
+            });
+        }
     }
 }
