@@ -2,21 +2,13 @@
     <string name="app_name">BookTracker</string>
     <string name="action_settings">Settings</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="book_title">Title</string>
     <string name="book_author">Author</string>
     <string name="book_cover">Book cover</string>
-
-    <string name="hint_book_title">Title...</string>
-    <string name="hint_book_author">Author...</string>
 
     <string name="button_save">Save</string>
     <string name="book_not_added">Book already exists</string>
@@ -37,7 +29,12 @@
     <string name="navigation_books">Books</string>
     <string name="navigation_statistics">Statistics</string>
     <string name="navigation_new">New</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--    statistics-->
+    <string name="statistics_total_header">Total</string>
+    <string name="statistics_total_books_started">Books started</string>
+    <string name="statistics_total_books_finished">Books read</string>
+    <string name="statistics_total_time_spent">Time spent</string>
+    <string name="statistics_total_average_time">Average time</string>
 
 </resources>
