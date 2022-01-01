@@ -168,7 +168,6 @@
                 android:text="@string/statistics_pages_read"
                 />
 
-            <!--simple text view to show the selected date by the user-->
             <TextView
                 android:id="@+id/selected_date"
                 android:layout_width="wrap_content"
@@ -177,7 +176,6 @@
                 android:text="Selected Date is : "
                 android:textSize="18sp" />
 
-            <!--button to open the material design date picker dialog-->
             <Button
                 android:id="@+id/pick_date_button"
                 android:layout_width="wrap_content"
