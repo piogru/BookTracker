@@ -211,7 +211,6 @@ public class StatisticsFragment extends Fragment {
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
-//        String pattern = "MMM DD, yyyy";
         String pattern = "MMM DD";
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
         String date1 = simpleDateFormat.format(new Date(start));
@@ -247,7 +246,6 @@ public class StatisticsFragment extends Fragment {
                         Long bookTime = book.book.getStartDate().getTime();
 
                         if(bookTime.compareTo((Long)dateRange.first) >= 0 && bookTime.compareTo((Long)dateRange.second) <= 0) {
-//                                monthlyBooks.add(book);
                             monthlyBooksStarted += 1;
                         }
 

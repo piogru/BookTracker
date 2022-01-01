@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -21,12 +22,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.BookWithAuthors;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -37,14 +44,21 @@ public class BooksFragment extends Fragment {
 
     BookViewModel bookViewModel;
     BookWithAuthors editedBook;
+    List<BookWithAuthors> bookList;
+    List<BookWithAuthors> bookSelection;
+
+    private Button pickDateButton;
+    private Button clearDateButton;
+    private TextView selectedDateTextView;
+    private View selectedDateLayout;
+    Pair dateRange;
 
     public BooksFragment() {
+        dateRange = null;
     }
 
     public static BooksFragment newInstance() {
         BooksFragment fragment = new BooksFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -67,9 +81,79 @@ public class BooksFragment extends Fragment {
         bookViewModel.findAllBooksWithAuthors().observe(getViewLifecycleOwner(), new Observer<List<BookWithAuthors>>() {
             @Override
             public void onChanged(List<BookWithAuthors> books) {
+                bookList = books;
                 adapter.setBooks(books);
             }
         });
+
+        // DatePicker
+        pickDateButton = view.findViewById(R.id.pick_date_button);
+        clearDateButton = view.findViewById(R.id.clear_date_button);
+        selectedDateTextView = view.findViewById(R.id.selected_date);
+        selectedDateLayout = view.findViewById(R.id.selected_date_layout);
+
+        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        Calendar cal = Calendar.getInstance();
+
+        Long start = MaterialDatePicker.thisMonthInUtcMilliseconds();
+        Long end = (start + new Long(cal.getActualMaximum(Calendar.DATE)) * 24 * 3600 * 1000) - 1;
+        Pair<Long, Long> pair = new Pair<>(
+                start,
+                end
+        );
+
+        materialDateBuilder.setTitleText("Select a date range");
+        materialDateBuilder.setSelection(pair);
+
+        final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+
+        String pattern = "MMM DD";
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
+        String date1 = simpleDateFormat.format(new Date(start));
+        String date2 = simpleDateFormat.format(new Date(end));
+        String selection = new String(date1 + " - " + date2);
+
+        selectedDateTextView.setText("Selected Date: " + selection);
+
+        pickDateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDatePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
+                    }
+                });
+
+        clearDateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedDateLayout.setVisibility(View.GONE);
+                        adapter.setBooks(bookList);
+                    }
+                });
+
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+                        selectedDateTextView.setText("Selected Date: " + materialDatePicker.getHeaderText());
+                        selectedDateLayout.setVisibility(View.VISIBLE);
+
+                        Pair dateRange = (Pair) selection;
+
+                        bookSelection = new ArrayList<>();
+
+                        for(BookWithAuthors book : bookList) {
+                            Long bookTime = book.book.getStartDate().getTime();
+
+                            if(bookTime.compareTo((Long)dateRange.first) >= 0 && bookTime.compareTo((Long)dateRange.second) <= 0) {
+                                bookSelection.add(book);
+                            }
+                        }
+
+                        adapter.setBooks(bookSelection);
+                    }
+                });
 
         return view;
     }
