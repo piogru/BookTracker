@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         openFragment(BookSearchFragment.newInstance());
                         return true;
                     case R.id.page_statistics:
-//                        openFragment(StatisticsFragment.newInstance());
+                        openFragment(StatisticsFragment.newInstance());
                         return true;
 
                 }

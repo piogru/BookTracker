@@ -138,16 +138,26 @@ public class BookSearchFragment extends Fragment {
                             .replace(R.id.fragment_container, new BooksFragment())
                             .addToBackStack(null)
                             .commit();
+
+                    Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
+                            getString(R.string.book_added),
+                            Snackbar.LENGTH_LONG)
+                            .show();
                 } else if(result.getResultCode() == 110) {
                     Intent replyIntent = new Intent();
                     activity.setResult(110, replyIntent);
 
-                    BottomNavigationView bottomNavigation = getView().findViewById(R.id.bottom_navigation);
+                    BottomNavigationView bottomNavigation = activity.findViewById(R.id.bottom_navigation);
                     bottomNavigation.setSelectedItemId(R.id.page_books);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, new BooksFragment())
                             .addToBackStack(null)
-                            .commit();;
+                            .commit();
+
+                    Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
+                            getString(R.string.book_not_added),
+                            Snackbar.LENGTH_LONG)
+                            .show();
                 }
             }
         });
