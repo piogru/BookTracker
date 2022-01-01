@@ -32,9 +32,11 @@
 
 <!--    statistics-->
     <string name="statistics_total_header">Total</string>
-    <string name="statistics_total_books_started">Books started</string>
-    <string name="statistics_total_books_finished">Books read</string>
-    <string name="statistics_total_time_spent">Time spent</string>
-    <string name="statistics_total_average_time">Average time</string>
+    <string name="statistics_monthly_header">Monthly</string>
+    <string name="statistics_books_started">Books started</string>
+    <string name="statistics_books_finished">Books read</string>
+    <string name="statistics_time_spent">Time spent</string>
+    <string name="statistics_average_time">Average time</string>
+    <string name="statistics_pages_read">Pages_read</string>
 
 </resources>

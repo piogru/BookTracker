@@ -32,80 +32,141 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_books_started"
+                android:text="@string/statistics_books_started"
                 />
 
             <TextView
                 android:id="@+id/statistics_total_books_started"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_books_started"
+                android:text="@string/statistics_books_started"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_books_finished"
+                android:text="@string/statistics_books_finished"
                 />
 
             <TextView
                 android:id="@+id/statistics_total_books_finished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_books_finished"
+                android:text="@string/statistics_books_finished"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_time_spent"
+                android:text="@string/statistics_time_spent"
                 />
 
             <TextView
                 android:id="@+id/statistics_total_time_spent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_time_spent"
+                android:text="@string/statistics_time_spent"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_average_time"
+                android:text="@string/statistics_average_time"
                 />
 
             <TextView
                 android:id="@+id/statistics_total_average_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_total_average_time"
+                android:text="@string/statistics_average_time"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_pages_read"
+                />
 
             <TextView
-                android:id="@+id/statistics_month_header"
+                android:id="@+id/statistics_total_pages_read"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_pages_read"
+                />
+
+<!--            monthly-->
+            <TextView
+                android:id="@+id/statistics_monthly_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_monthly_header"
+                />
 
             <TextView
-                android:id="@+id/statistics_month_books_started"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_books_started"
+                />
 
             <TextView
-                android:id="@+id/statistics_month_books_finished"
+                android:id="@+id/statistics_monthly_books_started"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_books_started"
+                />
 
             <TextView
-                android:id="@+id/statistics_month_time_spent"
+
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_books_finished"
+                />
 
             <TextView
-                android:id="@+id/statistics_month_average_time"
+                android:id="@+id/statistics_monthly_books_finished"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_books_finished"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_time_spent"
+                />
+
+            <TextView
+                android:id="@+id/statistics_monthly_time_spent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_time_spent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_average_time"
+                />
+
+            <TextView
+                android:id="@+id/statistics_monthly_average_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_average_time"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_pages_read"
+                />
+
+            <TextView
+                android:id="@+id/statistics_monthly_pages_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/statistics_pages_read"
+                />
 
         </LinearLayout>
 
