@@ -18,6 +18,7 @@ import com.example.booktracker.database.entities.BookWithAuthors;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -210,6 +211,15 @@ public class StatisticsFragment extends Fragment {
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
+//        String pattern = "MMM DD, yyyy";
+        String pattern = "MMM DD";
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
+        String date1 = simpleDateFormat.format(new Date(start));
+        String date2 = simpleDateFormat.format(new Date(end));
+        String selection = new String(date1 + " - " + date2);
+
+        selectedDateTextView.setText("Selected Date: " + selection);
+
         pickDateButton.setOnClickListener(
             new View.OnClickListener() {
                 @Override
@@ -222,7 +232,7 @@ public class StatisticsFragment extends Fragment {
             new MaterialPickerOnPositiveButtonClickListener() {
                 @Override
                 public void onPositiveButtonClick(Object selection) {
-                    selectedDateTextView.setText("Selected Date is : " + materialDatePicker.getHeaderText());
+                    selectedDateTextView.setText("Selected Date: " + materialDatePicker.getHeaderText());
                     Pair dateRange = (Pair) selection;
 
                     monthlyBooksStarted = 0;
