@@ -18,7 +18,7 @@ import java.io.File;
 
 public class BookReaderActivity extends AppCompatActivity {
 
-    public final static String EXTRA_FILE_NAME = "EXTRA_FILE_NAME";
+    public final static String EXTRA_FILE_URI = "EXTRA_FILE_URI";
 
     private PDFView pdfView;
 
@@ -30,45 +30,41 @@ public class BookReaderActivity extends AppCompatActivity {
         pdfView = findViewById(R.id.pdf_view);
 
         Intent intent = getIntent();
-        String fileName = intent.getStringExtra(EXTRA_FILE_NAME);
+        String fileUri = intent.getStringExtra(EXTRA_FILE_URI);
 
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) +
-                "/" + fileName);
-        Context context = getBaseContext();
-        Uri pdfURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) +
+//                "/" + fileName);
+//        Context context = getBaseContext();
+//        Uri pdfURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
 
         //SACRIFICE MEMORY FOR QUALITY
         //pdfView.useBestQuality(true)
 
-        File downloadsFolder= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+//        File downloadsFolder= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-        File[] files=downloadsFolder.listFiles();
+//        File[] files=downloadsFolder.listFiles();
 
-        if(file.canRead())
-        {
-            //LOAD IT
-            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
-                @Override
-                public void loadComplete(int nbPages) {
-                    Toast.makeText(BookReaderActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
-                }
-            }).load();
+        Uri uri = Uri.parse(fileUri);
+        File file = new File(uri.getPath());
 
+        pdfView.fromUri(uri).defaultPage(1).onLoad(new OnLoadCompleteListener() {
+            @Override
+            public void loadComplete(int nbPages) {
+                Toast.makeText(BookReaderActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
+            }
+        }).load();
 
-        }
+//        if(file.canRead())
+//        {
+//            //LOAD IT
+//            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
+//                @Override
+//                public void loadComplete(int nbPages) {
+//                    Toast.makeText(BookReaderActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
+//                }
+//            }).load();
+//        }
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        // call the superclass method first
-//        super.onDestroy();
-//
-//        Intent replyIntent = new Intent();
-//
-//        // 300 - finish reading
-//        setResult(300, replyIntent);
-//        finish();
-//    }
 
     @Override
     public void finish() {

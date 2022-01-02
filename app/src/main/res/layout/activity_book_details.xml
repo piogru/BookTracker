@@ -71,4 +71,12 @@
         android:background="@color/purple_200"
         android:text="Open pdf"
         />
+
+    <Button
+        android:id="@+id/button_select_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:text="Select pdf"
+        />
 </LinearLayout>

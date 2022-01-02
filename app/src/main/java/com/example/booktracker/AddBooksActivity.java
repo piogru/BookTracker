@@ -81,9 +81,9 @@ public class AddBooksActivity extends AppCompatActivity {
         final Button buttonSave = findViewById(R.id.button_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                bookViewModel.findBookWithTitle(bookSearch.getTitle()).observe(activity, new Observer<Book>() {
+                bookViewModel.findBookWithTitle(bookSearch.getTitle()).observe(activity, new Observer<BookWithAuthors>() {
                     @Override
-                    public void onChanged(Book test) {
+                    public void onChanged(BookWithAuthors test) {
                         if(test != null) {
                             Intent replyIntent = new Intent();
 
@@ -96,7 +96,7 @@ public class AddBooksActivity extends AppCompatActivity {
                             }
                             Book book = new Book(bookSearch.getTitle(),
                                     Integer.parseInt(bookSearch.getPageCount()),
-                                    startDate, bookSearch.getCover());
+                                    startDate, bookSearch.getCover(), null);
 
                             List<String> authorStrings = bookSearch.getAuthors();
                             List<Author> authors = new ArrayList<Author>();
