@@ -32,18 +32,6 @@ public class BookReaderActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String fileUri = intent.getStringExtra(EXTRA_FILE_URI);
 
-//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) +
-//                "/" + fileName);
-//        Context context = getBaseContext();
-//        Uri pdfURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-
-        //SACRIFICE MEMORY FOR QUALITY
-        //pdfView.useBestQuality(true)
-
-//        File downloadsFolder= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-//        File[] files=downloadsFolder.listFiles();
-
         Uri uri = Uri.parse(fileUri);
         File file = new File(uri.getPath());
 
@@ -53,17 +41,6 @@ public class BookReaderActivity extends AppCompatActivity {
                 Toast.makeText(BookReaderActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
             }
         }).load();
-
-//        if(file.canRead())
-//        {
-//            //LOAD IT
-//            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
-//                @Override
-//                public void loadComplete(int nbPages) {
-//                    Toast.makeText(BookReaderActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
-//                }
-//            }).load();
-//        }
     }
 
     @Override

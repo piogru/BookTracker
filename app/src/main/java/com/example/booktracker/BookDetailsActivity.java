@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +51,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView startDateTextView;
     private TextView endDateTextView;
     private TextView timeSpentTextView;
+    private TextView fileNameTextView;
     private ImageView bookCover;
 
     private Button readButton;
@@ -71,6 +74,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         startDateTextView = findViewById(R.id.book_start_date);
         endDateTextView = findViewById(R.id.book_end_date);
         timeSpentTextView = findViewById(R.id.book_time_spent);
+        fileNameTextView = findViewById(R.id.book_file_name);
 
         bookCover = findViewById(R.id.book_img_cover);
         readButton = findViewById(R.id.button_read);
@@ -106,6 +110,19 @@ public class BookDetailsActivity extends AppCompatActivity {
                             .placeholder(R.drawable.ic_book_black_24dp).into(bookCover);
                 } else {
                     bookCover.setImageResource(R.drawable.ic_book_black_24dp);
+                }
+
+                if(book.book.getFileUri() != null) {
+                    readButton.setVisibility(View.VISIBLE);
+
+                    Cursor returnCursor =
+                            getContentResolver().query(Uri.parse(book.book.getFileUri()), null, null, null, null);
+
+                    int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+                    returnCursor.moveToFirst();
+
+                    fileNameTextView.setText(returnCursor.getString(nameIndex));
                 }
             }
         });
