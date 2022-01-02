@@ -55,6 +55,21 @@
         android:layout_height="wrap_content"
         />
 
+    <TextView
+        android:id="@+id/book_file_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/button_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:visibility="gone"
+        android:text="Open pdf"
+        />
+
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
@@ -62,5 +77,13 @@
         android:visibility="gone"
         android:background="@color/purple_200"
         android:text="@string/finish_reading"
+        />
+
+    <Button
+        android:id="@+id/button_select_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:text="Select pdf"
         />
 </LinearLayout>

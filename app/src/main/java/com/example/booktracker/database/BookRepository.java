@@ -29,7 +29,7 @@ public class BookRepository {
         return booksWithAuthors;
     }
 
-    LiveData<Book> findBookWithTitle(String title) {
+    LiveData<BookWithAuthors> findBookWithTitle(String title) {
         return bookDao.findBookWithTitle(title);
     }
 
