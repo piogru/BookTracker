@@ -4,14 +4,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +39,8 @@ import java.util.List;
 import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
 
 public class BookDetailsActivity extends AppCompatActivity {
+
+    final static int REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1234;
 
     public static final String EXTRA_BOOK_TITLE = "com.example.booktracker.EDIT_BOOK_TITLE";
     public static final String EXTRA_BOOK_AUTHOR = "com.example.booktracker.EDIT_BOOK_AUTHOR";
@@ -63,6 +68,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     private BookViewModel bookViewModel;
     private BookWithAuthors book;
 
+    private String action;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         selectFileButton = findViewById(R.id.button_select_file);
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
+
+        action = null;
 
         bookViewModel.findBookWithTitle(getIntent().getStringExtra(EXTRA_BOOK_TITLE)).observe(this, new Observer<BookWithAuthors>() {
             @Override
@@ -145,21 +154,50 @@ public class BookDetailsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     startReading = new Date();
 
-
-                    Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
-//                    intent.putExtra(BookReaderActivity.EXTRA_FILE_NAME, "boska-komedia.pdf");
-                    intent.putExtra(BookReaderActivity.EXTRA_FILE_URI, book.book.getFileUri());
-
-                    activityResultLaunch.launch(intent);
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        action = "read";
+                        requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                    } else {
+//                        Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
+//                        intent.putExtra(BookReaderActivity.EXTRA_FILE_URI, book.book.getFileUri());
+//                        activityResultLaunch.launch(intent);
+                        beginReading();
+                    }
                 }
             });
 
             selectFileButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    openFile();
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        action = "select";
+                        requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                    } else {
+                        openFile();
+                    }
                 }
             });
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_READ_EXTERNAL_STORAGE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && action != null) {
+                if(action == "select") {
+                    openFile();
+                } else {
+                    beginReading();
+                }
+
+            }
+        }
+    }
+
+    private void beginReading() {
+        Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
+        intent.putExtra(BookReaderActivity.EXTRA_FILE_URI, book.book.getFileUri());
+        activityResultLaunch.launch(intent);
     }
 
     private void openFile() {
