@@ -1,21 +1,30 @@
 package com.example.booktracker;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.booktracker.booksearch.BookSearch;
-import com.example.booktracker.database.BookViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Date;
 
 import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
@@ -38,7 +47,10 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView timeSpentTextView;
     private ImageView bookCover;
 
-    private BookViewModel bookViewModel;
+    private Button readButton;
+
+    private Date startReading;
+    private Date endReading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +65,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         timeSpentTextView = findViewById(R.id.book_time_spent);
 
         bookCover = findViewById(R.id.book_img_cover);
+        readButton = findViewById(R.id.button_read);
 
         Bundle extras = getIntent().getExtras();
 
@@ -89,8 +102,6 @@ public class BookDetailsActivity extends AppCompatActivity {
             bookCover.setImageResource(R.drawable.ic_book_black_24dp);
         }
 
-        bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-
         // confirmation dialog
         if(!getIntent().hasExtra(EXTRA_BOOK_END_DATE)) {
             final Button button = findViewById(R.id.button_save);
@@ -104,6 +115,32 @@ public class BookDetailsActivity extends AppCompatActivity {
                             FinishConfirmationDialogFragment.TAG);
                 }
             });
+
+            readButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    startReading = new Date();
+
+                    Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
+                    intent.putExtra(BookReaderActivity.EXTRA_FILE_NAME, "boska-komedia.pdf");
+
+                    activityResultLaunch.launch(intent);
+//                    startActivity(intent);
+                }
+            });
         }
     }
+
+    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == 300) {
+                        endReading = new Date();
+                        Long timeDiff = (endReading.getTime() - startReading.getTime()) / 1000 / 60;
+
+                        Toast.makeText(BookDetailsActivity.this, "Time reading: " + String.valueOf(timeDiff) + " minutes", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 }

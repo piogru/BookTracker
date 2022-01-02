@@ -63,4 +63,12 @@
         android:background="@color/purple_200"
         android:text="@string/finish_reading"
         />
+
+    <Button
+        android:id="@+id/button_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:text="Open pdf"
+        />
 </LinearLayout>
