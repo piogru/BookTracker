@@ -37,6 +37,9 @@
     <string name="statistics_books_finished">Books read</string>
     <string name="statistics_time_spent">Time spent</string>
     <string name="statistics_average_time">Average time</string>
-    <string name="statistics_pages_read">Pages_read</string>
+    <string name="statistics_pages_read">Pages read</string>
 
+    <string name="clear">Clear</string>
+    <string name="select_date">Select date</string>
+    <string name="selected_date">Selected date:</string>
 </resources>

@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatisticsFragment">
+    tools:context=".StatisticsFragment"
+    android:isScrollContainer="true"
+    android:layout_marginBottom="50dp"
+    >
 
     <ScrollView
         android:id="@+id/statistics_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:verticalScrollbarPosition="defaultPosition"
+        app:layout_constraintTop_toTopOf="@+id/parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        >
 
         <LinearLayout
             android:id="@+id/statistics_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:gravity="center_horizontal"
             >
 
             <TextView
@@ -27,166 +31,379 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/statistics_total_header"
+                android:textSize="@dimen/text_large"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_books_started"
-                />
+                android:columnCount="2"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:useDefaultMargins="true"
+                >
 
-            <TextView
-                android:id="@+id/statistics_total_books_started"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_started"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_finished"
-                />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/statistics_total_books_finished"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_finished"
-                />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/statistics_books_started"
+                            android:textSize="@dimen/text_medium"
+                            />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_time_spent"
-                />
+                        <TextView
+                            android:id="@+id/statistics_total_books_started"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/text_small"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/statistics_total_time_spent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_time_spent"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_books_finished"
+                            android:textSize="@dimen/text_medium"
+                            />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_average_time"
-                />
+                        <TextView
+                            android:id="@+id/statistics_total_books_finished"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/statistics_total_average_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_average_time"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_pages_read"
-                />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/statistics_total_pages_read"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_pages_read"
-                />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_time_spent"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:id="@+id/statistics_total_time_spent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_average_time"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:id="@+id/statistics_total_average_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_pages_read"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:id="@+id/statistics_total_pages_read"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
 
 <!--            monthly-->
+
             <TextView
                 android:id="@+id/statistics_monthly_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/statistics_monthly_header"
+                android:textSize="@dimen/text_large"
+                android:layout_marginTop="10dp"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <include layout="@layout/date_picker"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/statistics_books_started"
-                />
+                android:columnCount="2"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:useDefaultMargins="true"
+                >
 
-            <TextView
-                android:id="@+id/statistics_monthly_books_started"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_started"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
 
-            <TextView
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_finished"
-                />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/statistics_books_started"
+                            android:textSize="@dimen/text_medium"
+                            />
 
-            <TextView
-                android:id="@+id/statistics_monthly_books_finished"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_books_finished"
-                />
+                        <TextView
+                            android:id="@+id/statistics_monthly_books_started"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/text_small"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_time_spent"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_books_finished"
+                            android:textSize="@dimen/text_medium"
+                            />
 
-            <TextView
-                android:id="@+id/statistics_monthly_time_spent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_time_spent"
-                />
+                        <TextView
+                            android:id="@+id/statistics_monthly_books_finished"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_average_time"
-                />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
 
-            <TextView
-                android:id="@+id/statistics_monthly_average_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_average_time"
-                />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_pages_read"
-                />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_time_spent"
+                            android:textSize="@dimen/text_medium"
+                            />
 
-            <TextView
-                android:id="@+id/statistics_monthly_pages_read"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_pages_read"
-                />
+                        <TextView
+                            android:id="@+id/statistics_monthly_time_spent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
 
-            <TextView
-                android:id="@+id/selected_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Selected Date is : "
-                android:textSize="18sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/pick_date_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Select Date"
-                android:textSize="18sp"
-                app:icon="@drawable/ic_add_black_24dp" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_average_time"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:id="@+id/statistics_monthly_average_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="3dp"
+                    android:layout_gravity="center|fill"
+                    android:layout_columnWeight="1"
+                    app:contentPaddingTop="15dp"
+                    app:contentPaddingBottom="15dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/statistics_pages_read"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:id="@+id/statistics_monthly_pages_read"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_small"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </GridLayout>
         </LinearLayout>
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

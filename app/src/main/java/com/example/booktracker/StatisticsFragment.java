@@ -164,7 +164,6 @@ public class StatisticsFragment extends Fragment {
                 totalPagesReadTextView.setText(String.valueOf(totalPagesRead));
 
                 // monthly statistics
-
                 for(BookWithAuthors book : monthlyBooks) {
                     if(book.book.getEndDate() != null) {
                         monthlyBooksFinished += 1;
@@ -198,7 +197,6 @@ public class StatisticsFragment extends Fragment {
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
 
-
         Long start = MaterialDatePicker.thisMonthInUtcMilliseconds();
         Long end = (start + new Long(cal.getActualMaximum(Calendar.DATE)) * 24 * 3600 * 1000) - 1;
         Pair<Long, Long> pair = new Pair<>(
@@ -218,6 +216,8 @@ public class StatisticsFragment extends Fragment {
         String selection = new String(date1 + " - " + date2);
 
         selectedDateTextView.setText("Selected Date: " + selection);
+        view.findViewById(R.id.selected_date_layout).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.clear_date_button).setVisibility(View.GONE);
 
         pickDateButton.setOnClickListener(
             new View.OnClickListener() {

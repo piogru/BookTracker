@@ -3,18 +3,28 @@
     android:id="@+id/book_item"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip">
+    android:layout_gravity="center_vertical"
+    android:paddingHorizontal="@dimen/mini_padding"
+    >
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        />
 
     <TextView
         android:id="@+id/book_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
-         android:layout_alignParentTop="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:gravity="center_vertical"
         android:text="@string/book_title"
-        android:textSize="16sp" />
+        android:paddingHorizontal="@dimen/mini_padding"
+        android:textSize="@dimen/text_large" />
 
     <TextView
         android:id="@+id/book_author"
@@ -25,5 +35,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         android:text="@string/book_author"
-        android:textSize="16sp" />
+        android:paddingTop="@dimen/mini_padding"
+        android:paddingHorizontal="@dimen/mini_padding"
+        android:textSize="@dimen/text_small" />
 </RelativeLayout>
