@@ -100,6 +100,7 @@ public class BooksFragment extends Fragment {
         clearDateButton = view.findViewById(R.id.clear_date_button);
         selectedDateTextView = view.findViewById(R.id.selected_date);
         selectedDateLayout = view.findViewById(R.id.selected_date_layout);
+        clearDateButton.setVisibility(View.GONE);
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
         Calendar cal = Calendar.getInstance();
@@ -113,21 +114,15 @@ public class BooksFragment extends Fragment {
 
         materialDateBuilder.setTitleText("Select a date range");
         materialDateBuilder.setSelection(pair);
-
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
-        String pattern = "MMM DD";
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
-        String date1 = simpleDateFormat.format(new Date(start));
-        String date2 = simpleDateFormat.format(new Date(end));
-        String selection = new String(date1 + " - " + date2);
-
-        selectedDateTextView.setText(selection);
+        selectedDateTextView.setText(R.string.select_date);
 
         pickDateButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        clearDateButton.setVisibility(View.VISIBLE);
                         materialDatePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
                     }
                 });
@@ -136,7 +131,9 @@ public class BooksFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        selectedDateLayout.setVisibility(View.GONE);
+//                        selectedDateLayout.setVisibility(View.GONE);
+                        clearDateButton.setVisibility(View.GONE);
+                        selectedDateTextView.setText(R.string.select_date);
                         adapter.setBooks(bookList);
                     }
                 });
@@ -145,7 +142,7 @@ public class BooksFragment extends Fragment {
                 new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        selectedDateTextView.setText("Selected Date: " + materialDatePicker.getHeaderText());
+                        selectedDateTextView.setText(materialDatePicker.getHeaderText());
                         selectedDateLayout.setVisibility(View.VISIBLE);
 
                         Pair dateRange = (Pair) selection;
@@ -244,11 +241,11 @@ public class BooksFragment extends Fragment {
                             Snackbar.LENGTH_LONG).show();
                 } else if (result.getResultCode() == 200) {
                     Date endDate = new Date();
-                    long diffInMillies = Math.abs(endDate.getTime() - editedBook.book.getStartDate().getTime());
-                    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    int timeSpent = (int)diff;
+//                    long diffInMillies = Math.abs(endDate.getTime() - editedBook.book.getStartDate().getTime());
+//                    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//                    int timeSpent = (int)diff;
                     editedBook.book.setEndDate(endDate);
-                    editedBook.book.setTimeSpent(timeSpent);
+//                    editedBook.book.setTimeSpent(timeSpent);
                     bookViewModel.update(editedBook.book);
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
                             Snackbar.LENGTH_LONG).show();

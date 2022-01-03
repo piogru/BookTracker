@@ -61,6 +61,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private Button readButton;
     private Button selectFileButton;
+    private Button editFileButton;
 
     private Date startReading;
     private Date endReading;
@@ -86,6 +87,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         bookCover = findViewById(R.id.book_img_cover);
         readButton = findViewById(R.id.button_read);
         selectFileButton = findViewById(R.id.button_select_file);
+        editFileButton = findViewById(R.id.button_edit_file);
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
 
@@ -97,19 +99,11 @@ public class BookDetailsActivity extends AppCompatActivity {
                 book = select;
 
                 titleTextView.setText(book.book.getTitle());
-
                 authorTextView.setText(TextUtils.join(", ", book.authors));
-
                 pageCountTextView.setText(String.valueOf(book.book.getPageCount()));
 
                 Date d = book.book.getStartDate();
                 startDateTextView.setText(d.toString());
-
-                if(book.book.getEndDate() != null) {
-                    d = book.book.getEndDate();
-                    endDateTextView.setVisibility(View.VISIBLE);
-                    endDateTextView.setText(d.toString());
-                }
 
                 timeSpentTextView.setText(String.valueOf(book.book.getTimeSpent()));
 
@@ -117,13 +111,64 @@ public class BookDetailsActivity extends AppCompatActivity {
                     Picasso.with(getApplicationContext())
                             .load(IMAGE_URL_BASE + book.book.getCover() + "-L.jpg")
                             .placeholder(R.drawable.ic_book_black_24dp).into(bookCover);
-                } else {
+                }
+                else {
                     bookCover.setImageResource(R.drawable.ic_book_black_24dp);
                 }
 
-                if(book.book.getFileUri() != null) {
-                    readButton.setVisibility(View.VISIBLE);
+                if(book.book.getEndDate() != null) {
+                    d = book.book.getEndDate();
+                    findViewById(R.id.book_end_date_layout).setVisibility(View.VISIBLE);
+                    endDateTextView.setText(d.toString());
 
+//                    selectFileButton.setVisibility(View.GONE);
+//                    editFileButton.setVisibility(View.GONE);
+
+                    if(book.book.getFileUri() != null) {
+                        selectFileButton.setVisibility(View.GONE);
+                        readButton.setVisibility(View.VISIBLE);
+                        editFileButton.setVisibility(View.GONE);
+                    } else {
+                        selectFileButton.setVisibility(View.GONE);
+                        readButton.setVisibility(View.GONE);
+                        editFileButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    selectFileButton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                action = "select";
+                                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                            } else {
+                                openFile();
+                            }
+                        }
+                    });
+
+                    editFileButton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                action = "select";
+                                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                            } else {
+                                openFile();
+                            }
+                        }
+                    });
+
+                    if(book.book.getFileUri() != null) {
+                        selectFileButton.setVisibility(View.GONE);
+                        readButton.setVisibility(View.VISIBLE);
+                        editFileButton.setVisibility(View.VISIBLE);
+                    } else {
+                        selectFileButton.setVisibility(View.VISIBLE);
+                        readButton.setVisibility(View.GONE);
+                        editFileButton.setVisibility(View.GONE);
+                    }
+                }
+
+                if(book.book.getFileUri() != null) {
                     Cursor returnCursor =
                             getContentResolver().query(Uri.parse(book.book.getFileUri()), null, null, null, null);
 
@@ -132,6 +177,19 @@ public class BookDetailsActivity extends AppCompatActivity {
                     returnCursor.moveToFirst();
 
                     fileNameTextView.setText(returnCursor.getString(nameIndex));
+
+                    readButton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            startReading = new Date();
+
+                            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                action = "read";
+                                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                            } else {
+                                beginReading();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -147,33 +205,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     confirmationDialog.show(getSupportFragmentManager(),
                             FinishConfirmationDialogFragment.TAG);
-                }
-            });
-
-            readButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    startReading = new Date();
-
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        action = "read";
-                        requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
-                    } else {
-//                        Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
-//                        intent.putExtra(BookReaderActivity.EXTRA_FILE_URI, book.book.getFileUri());
-//                        activityResultLaunch.launch(intent);
-                        beginReading();
-                    }
-                }
-            });
-
-            selectFileButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        action = "select";
-                        requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
-                    } else {
-                        openFile();
-                    }
                 }
             });
         }
