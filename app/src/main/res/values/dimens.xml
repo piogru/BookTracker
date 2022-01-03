@@ -1,6 +1,21 @@
 <resources>
+    <dimen name="text_xl">32sp</dimen>
+    <dimen name="text_large">24sp</dimen>
+    <dimen name="text_medium">20sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+
+    <dimen name="mini_padding">2dp</dimen>
+
+    <dimen name="margin_large">10dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_small">5dp</dimen>
+
+    <dimen name="button_wide">250dp</dimen>
+    <dimen name="button_icon">40dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="small_padding">6dp</dimen>
     <dimen name="big_padding">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
 </resources>

@@ -8,49 +8,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top">
 
-    <LinearLayout
-        android:id="@+id/date_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerview"
-        >
-
-        <LinearLayout
-            android:id="@+id/selected_date_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            >
-
-            <TextView
-                android:id="@+id/selected_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Selected Date: "
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/clear_date_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Clear" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/pick_date_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:textSize="12sp"
-            app:icon="@drawable/ic_add_black_24dp" />
-    </LinearLayout>
+    <include layout="@layout/date_picker"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"

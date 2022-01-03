@@ -95,8 +95,10 @@ public class BookSearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BookContainer> call, Throwable t) {
-                Snackbar.make(view.findViewById(R.id.main_view), "Something went wrong... Try later",
-                        Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view.findViewById(R.id.main_view), getResources().getText(R.string.book_search_failed),
+                        Snackbar.LENGTH_LONG)
+                        .setAnchorView(R.id.bottom_navigation)
+                        .show();
             }
         }));
     }
@@ -113,13 +115,6 @@ public class BookSearchFragment extends Fragment {
         adapter.setBooks(books);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
@@ -142,6 +137,7 @@ public class BookSearchFragment extends Fragment {
                     Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                             getString(R.string.book_added),
                             Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
                             .show();
                 } else if(result.getResultCode() == 110) {
                     Intent replyIntent = new Intent();
@@ -157,6 +153,7 @@ public class BookSearchFragment extends Fragment {
                     Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                             getString(R.string.book_not_added),
                             Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
                             .show();
                 }
             }
@@ -194,10 +191,7 @@ public class BookSearchFragment extends Fragment {
                     bookCover.setImageResource(R.drawable.ic_book_black_24dp);
                 }
             }
-
-
         }
-
         private boolean checkNullOrEmpty(String s) {
             return s != null && !s.isEmpty();
         }

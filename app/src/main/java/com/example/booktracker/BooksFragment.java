@@ -19,11 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.BookWithAuthors;
@@ -91,6 +98,7 @@ public class BooksFragment extends Fragment {
         clearDateButton = view.findViewById(R.id.clear_date_button);
         selectedDateTextView = view.findViewById(R.id.selected_date);
         selectedDateLayout = view.findViewById(R.id.selected_date_layout);
+        clearDateButton.setVisibility(View.GONE);
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
         Calendar cal = Calendar.getInstance();
@@ -104,21 +112,15 @@ public class BooksFragment extends Fragment {
 
         materialDateBuilder.setTitleText("Select a date range");
         materialDateBuilder.setSelection(pair);
-
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
-        String pattern = "MMM DD";
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
-        String date1 = simpleDateFormat.format(new Date(start));
-        String date2 = simpleDateFormat.format(new Date(end));
-        String selection = new String(date1 + " - " + date2);
-
-        selectedDateTextView.setText("Selected Date: " + selection);
+        selectedDateTextView.setText(R.string.select_date);
 
         pickDateButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        clearDateButton.setVisibility(View.VISIBLE);
                         materialDatePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
                     }
                 });
@@ -127,7 +129,9 @@ public class BooksFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        selectedDateLayout.setVisibility(View.GONE);
+//                        selectedDateLayout.setVisibility(View.GONE);
+                        clearDateButton.setVisibility(View.GONE);
+                        selectedDateTextView.setText(R.string.select_date);
                         adapter.setBooks(bookList);
                     }
                 });
@@ -136,7 +140,7 @@ public class BooksFragment extends Fragment {
                 new MaterialPickerOnPositiveButtonClickListener() {
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-                        selectedDateTextView.setText("Selected Date: " + materialDatePicker.getHeaderText());
+                        selectedDateTextView.setText(materialDatePicker.getHeaderText());
                         selectedDateLayout.setVisibility(View.VISIBLE);
 
                         Pair dateRange = (Pair) selection;
@@ -169,14 +173,33 @@ public class BooksFragment extends Fragment {
             bookTitleTextView = itemView.findViewById(R.id.book_title);
             bookAuthorTextView = itemView.findViewById(R.id.book_author);
             View bookItem = itemView.findViewById(R.id.book_item);
+
+
             bookItem.setOnLongClickListener(v -> {
-                bookViewModel.delete(book);
-                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
-                        getString(R.string.book_deleted),
-                        Snackbar.LENGTH_LONG)
-                        .show();
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(getContext(), bookItem, Gravity.END);
+                popup.getMenuInflater().inflate(R.menu.book_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()){
+                            case R.id.book_menu_delete:
+                                bookViewModel.delete(book);
+                                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
+                                        getString(R.string.book_deleted),
+                                        Snackbar.LENGTH_LONG)
+                                        .setAnchorView(R.id.bottom_navigation)
+                                        .show();
+                        }
+                        return true;
+                    }
+                });
+                popup.show(); //showing popup menu
+
                 return true;
             });
+
             bookItem.setOnClickListener(v -> {
                 editedBook = book;
                 Intent intent = new Intent(getActivity(), BookDetailsActivity.class);
@@ -211,20 +234,22 @@ public class BooksFragment extends Fragment {
 
                 if (result.getResultCode() == 100) {
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_added),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 } else if (result.getResultCode() == 110) {
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_not_added),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 } else if (result.getResultCode() == 200) {
                     Date endDate = new Date();
-                    long diffInMillies = Math.abs(endDate.getTime() - editedBook.book.getStartDate().getTime());
-                    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    int timeSpent = (int)diff;
                     editedBook.book.setEndDate(endDate);
-                    editedBook.book.setTimeSpent(timeSpent);
                     bookViewModel.update(editedBook.book);
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 }
             }
         });
@@ -261,6 +286,5 @@ public class BooksFragment extends Fragment {
             this.books = books;
             notifyDataSetChanged();
         }
-
     }
 }
