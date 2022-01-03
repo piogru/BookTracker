@@ -84,8 +84,6 @@ public class BooksFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-//        registerForContextMenu(recyclerView);
-
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         bookViewModel.findAllBooksWithAuthors().observe(getViewLifecycleOwner(), new Observer<List<BookWithAuthors>>() {
             @Override
@@ -246,11 +244,7 @@ public class BooksFragment extends Fragment {
                             .show();
                 } else if (result.getResultCode() == 200) {
                     Date endDate = new Date();
-//                    long diffInMillies = Math.abs(endDate.getTime() - editedBook.book.getStartDate().getTime());
-//                    long diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//                    int timeSpent = (int)diff;
                     editedBook.book.setEndDate(endDate);
-//                    editedBook.book.setTimeSpent(timeSpent);
                     bookViewModel.update(editedBook.book);
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
                             Snackbar.LENGTH_LONG)
