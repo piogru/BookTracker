@@ -121,9 +121,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                     findViewById(R.id.book_end_date_layout).setVisibility(View.VISIBLE);
                     endDateTextView.setText(d.toString());
 
-//                    selectFileButton.setVisibility(View.GONE);
-//                    editFileButton.setVisibility(View.GONE);
-
                     if(book.book.getFileUri() != null) {
                         selectFileButton.setVisibility(View.GONE);
                         readButton.setVisibility(View.VISIBLE);
