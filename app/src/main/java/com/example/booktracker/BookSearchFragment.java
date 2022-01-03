@@ -96,7 +96,9 @@ public class BookSearchFragment extends Fragment {
             @Override
             public void onFailure(Call<BookContainer> call, Throwable t) {
                 Snackbar.make(view.findViewById(R.id.main_view), getResources().getText(R.string.book_search_failed),
-                        Snackbar.LENGTH_LONG).show();
+                        Snackbar.LENGTH_LONG)
+                        .setAnchorView(R.id.bottom_navigation)
+                        .show();
             }
         }));
     }
@@ -135,6 +137,7 @@ public class BookSearchFragment extends Fragment {
                     Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                             getString(R.string.book_added),
                             Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
                             .show();
                 } else if(result.getResultCode() == 110) {
                     Intent replyIntent = new Intent();
@@ -150,6 +153,7 @@ public class BookSearchFragment extends Fragment {
                     Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                             getString(R.string.book_not_added),
                             Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
                             .show();
                 }
             }

@@ -191,6 +191,7 @@ public class BooksFragment extends Fragment {
                                 Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
                                         getString(R.string.book_deleted),
                                         Snackbar.LENGTH_LONG)
+                                        .setAnchorView(R.id.bottom_navigation)
                                         .show();
                         }
                         return true;
@@ -235,10 +236,14 @@ public class BooksFragment extends Fragment {
 
                 if (result.getResultCode() == 100) {
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_added),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 } else if (result.getResultCode() == 110) {
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_not_added),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 } else if (result.getResultCode() == 200) {
                     Date endDate = new Date();
 //                    long diffInMillies = Math.abs(endDate.getTime() - editedBook.book.getStartDate().getTime());
@@ -248,7 +253,9 @@ public class BooksFragment extends Fragment {
 //                    editedBook.book.setTimeSpent(timeSpent);
                     bookViewModel.update(editedBook.book);
                     Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
-                            Snackbar.LENGTH_LONG).show();
+                            Snackbar.LENGTH_LONG)
+                            .setAnchorView(R.id.bottom_navigation)
+                            .show();
                 }
             }
         });
