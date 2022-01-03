@@ -21,8 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone"
+
             >
+<!--            android:visibility="gone"-->
+            <Button
+                android:id="@+id/pick_date_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="@dimen/button_icon"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_calendar_black_24dp" />
+
+<!--            android:background="@android:color/transparent"-->
+<!--            android:textSize="12sp"-->
+            <!--                android:text="@string/select_date"-->
 
             <TextView
                 android:id="@+id/selected_date"
@@ -33,19 +45,17 @@
 
             <Button
                 android:id="@+id/clear_date_button"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/button_icon"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/clear" />
+                app:icon="@drawable/ic_cancel_black_24dp"
+
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                />
+
+<!--            android:text="@string/clear"-->
         </LinearLayout>
 
-        <Button
-            android:id="@+id/pick_date_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_date"
-            android:textSize="12sp"
-            app:icon="@drawable/ic_add_black_24dp" />
     </LinearLayout>
 
 </merge>

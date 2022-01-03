@@ -122,7 +122,7 @@ public class BooksFragment extends Fragment {
         String date2 = simpleDateFormat.format(new Date(end));
         String selection = new String(date1 + " - " + date2);
 
-        selectedDateTextView.setText("Selected Date: " + selection);
+        selectedDateTextView.setText(selection);
 
         pickDateButton.setOnClickListener(
                 new View.OnClickListener() {

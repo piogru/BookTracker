@@ -2,10 +2,6 @@
     <string name="app_name">BookTracker</string>
     <string name="action_settings">Settings</string>
 
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-
     <string name="book_title">Title</string>
     <string name="book_author">Author</string>
     <string name="book_cover">Book cover</string>
@@ -17,6 +13,8 @@
     <string name="book_edited">Book edited</string>
     <string name="book_deleted">Book deleted</string>
     <string name="book_finished">Finished reading book</string>
+    <string name="book_page_count">Page count: </string>
+    <string name="book_date_start">Start date: </string>
 
     <string name="book_search_hint">Search for books</string>
     <string name="book_search_failed">Book search failed... Try later</string>
@@ -44,7 +42,7 @@
 
     <string name="clear">Clear</string>
     <string name="select_date">Select date</string>
-    <string name="selected_date">Selected date:</string>
+    <string name="selected_date">Selected date</string>
 
     <string name="date_picker_header">Select a date range</string>
 
