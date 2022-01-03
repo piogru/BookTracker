@@ -19,11 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.BookWithAuthors;
@@ -76,6 +83,8 @@ public class BooksFragment extends Fragment {
         final BookAdapter adapter = new BookAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+//        registerForContextMenu(recyclerView);
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         bookViewModel.findAllBooksWithAuthors().observe(getViewLifecycleOwner(), new Observer<List<BookWithAuthors>>() {
@@ -169,14 +178,32 @@ public class BooksFragment extends Fragment {
             bookTitleTextView = itemView.findViewById(R.id.book_title);
             bookAuthorTextView = itemView.findViewById(R.id.book_author);
             View bookItem = itemView.findViewById(R.id.book_item);
+
+
             bookItem.setOnLongClickListener(v -> {
-                bookViewModel.delete(book);
-                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
-                        getString(R.string.book_deleted),
-                        Snackbar.LENGTH_LONG)
-                        .show();
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(getContext(), bookItem, Gravity.END);
+                popup.getMenuInflater().inflate(R.menu.book_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()){
+                            case R.id.book_menu_delete:
+                                bookViewModel.delete(book);
+                                Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),
+                                        getString(R.string.book_deleted),
+                                        Snackbar.LENGTH_LONG)
+                                        .show();
+                        }
+                        return true;
+                    }
+                });
+                popup.show(); //showing popup menu
+
                 return true;
             });
+
             bookItem.setOnClickListener(v -> {
                 editedBook = book;
                 Intent intent = new Intent(getActivity(), BookDetailsActivity.class);
@@ -261,6 +288,5 @@ public class BooksFragment extends Fragment {
             this.books = books;
             notifyDataSetChanged();
         }
-
     }
 }

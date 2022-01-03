@@ -204,7 +204,7 @@ public class StatisticsFragment extends Fragment {
                 end
         );
 
-        materialDateBuilder.setTitleText("Select a date range");
+        materialDateBuilder.setTitleText(getResources().getString(R.string.date_picker_header));
         materialDateBuilder.setSelection(pair);
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
@@ -215,7 +215,8 @@ public class StatisticsFragment extends Fragment {
         String date2 = simpleDateFormat.format(new Date(end));
         String selection = new String(date1 + " - " + date2);
 
-        selectedDateTextView.setText("Selected Date: " + selection);
+
+        selectedDateTextView.setText(selection);
         view.findViewById(R.id.selected_date_layout).setVisibility(View.VISIBLE);
         view.findViewById(R.id.clear_date_button).setVisibility(View.GONE);
 
@@ -231,7 +232,7 @@ public class StatisticsFragment extends Fragment {
             new MaterialPickerOnPositiveButtonClickListener() {
                 @Override
                 public void onPositiveButtonClick(Object selection) {
-                    selectedDateTextView.setText("Selected Date: " + materialDatePicker.getHeaderText());
+                    selectedDateTextView.setText(materialDatePicker.getHeaderText());
                     Pair dateRange = (Pair) selection;
 
                     monthlyBooksStarted = 0;

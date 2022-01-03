@@ -95,7 +95,7 @@ public class BookSearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BookContainer> call, Throwable t) {
-                Snackbar.make(view.findViewById(R.id.main_view), "Something went wrong... Try later",
+                Snackbar.make(view.findViewById(R.id.main_view), getResources().getText(R.string.book_search_failed),
                         Snackbar.LENGTH_LONG).show();
             }
         }));
@@ -113,13 +113,6 @@ public class BookSearchFragment extends Fragment {
         adapter.setBooks(books);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
@@ -194,10 +187,7 @@ public class BookSearchFragment extends Fragment {
                     bookCover.setImageResource(R.drawable.ic_book_black_24dp);
                 }
             }
-
-
         }
-
         private boolean checkNullOrEmpty(String s) {
             return s != null && !s.isEmpty();
         }
