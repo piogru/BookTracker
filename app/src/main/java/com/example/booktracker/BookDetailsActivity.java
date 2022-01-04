@@ -126,6 +126,17 @@ public class BookDetailsActivity extends AppCompatActivity {
 //                    endDateTextView.setText(d.toString());
                     endDateTextView.setText(new SimpleDateFormat().format(d));
 
+                    if(book.book.getFileUri() != null) {
+                        selectFileButton.setVisibility(View.GONE);
+                        readButton.setVisibility(View.VISIBLE);
+                        editFileButton.setVisibility(View.GONE);
+                    } else {
+                        selectFileButton.setVisibility(View.GONE);
+                        readButton.setVisibility(View.GONE);
+                        editFileButton.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     // confirmation dialog
                     final Button button = findViewById(R.id.button_save);
                     button.setVisibility(View.VISIBLE);
@@ -139,17 +150,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    if(book.book.getFileUri() != null) {
-                        selectFileButton.setVisibility(View.GONE);
-                        readButton.setVisibility(View.VISIBLE);
-                        editFileButton.setVisibility(View.GONE);
-                    } else {
-                        selectFileButton.setVisibility(View.GONE);
-                        readButton.setVisibility(View.GONE);
-                        editFileButton.setVisibility(View.GONE);
-                    }
-                }
-                else {
                     selectFileButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View view) {
                             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -228,6 +228,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private void beginReading() {
         Intent intent = new Intent(BookDetailsActivity.this, BookReaderActivity.class);
         intent.putExtra(BookReaderActivity.EXTRA_FILE_URI, book.book.getFileUri());
+        intent.putExtra(BookReaderActivity.EXTRA_CURRENT_PAGE, book.book.getCurrentPage());
         activityResultLaunch.launch(intent);
     }
 
@@ -251,6 +252,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                         Toast.makeText(BookDetailsActivity.this, "Time reading: " + String.valueOf(timeDiff) + " minutes", Toast.LENGTH_LONG).show();
 
                         book.book.setTimeSpent(book.book.getTimeSpent() + timeDiff.intValue());
+                        book.book.setCurrentPage(result.getData().getIntExtra(BookReaderActivity.EXTRA_CURRENT_PAGE, 0));
 
                         bookViewModel.update(book.book);
                     }

@@ -19,6 +19,7 @@ public class Book {
     private Date endDate;
     private String cover;
     private String fileUri;
+    private int currentPage;
 
     public Long getBookId() {
         return bookId;
@@ -84,6 +85,14 @@ public class Book {
         this.fileUri = fileUri;
     }
 
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
     public Book(String title, int pageCount, Date startDate, String cover, String fileUri) {
         this.title = title;
         this.pageCount = pageCount;
@@ -92,6 +101,7 @@ public class Book {
         this.timeSpent = 0;
         this.cover = cover;
         this.fileUri = fileUri;
+        this.currentPage = 0;
     }
 
 }
