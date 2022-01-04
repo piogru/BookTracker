@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BookTracker</string>
     <string name="action_settings">Ustawienia</string>
     <string name="book_title">Tytuł</string>
     <string name="book_author">Autor</string>
@@ -42,4 +41,5 @@
     <string name="date_picker_header">Wybierz okres</string>
     <string name="days">Dni</string>
     <string name="minutes">Minut</string>
+    <string name="notification_text">Czytasz:</string>
 </resources>
