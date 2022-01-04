@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,10 +43,14 @@ import retrofit2.Response;
 
 public class BookSearchFragment extends Fragment {
 
+    private static final String KEY_RECYCLER_VIEW = "recycler_view";
+    private static final String KEY_ADAPTER_DATA = "adapter_data";
+
+    RecyclerView recyclerView;
     SearchView searchView;
 
     public BookSearchFragment() {
-        // Required empty public constructor
+
     }
 
     public static BookSearchFragment newInstance() {
@@ -63,6 +69,7 @@ public class BookSearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_book_search, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerview);
         searchView = view.findViewById(R.id.book_search_bar);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -77,6 +84,21 @@ public class BookSearchFragment extends Fragment {
                 return false;
             }
         });
+
+        if(savedInstanceState != null) {
+            Parcelable recyclerViewState = savedInstanceState.getParcelable(KEY_RECYCLER_VIEW);
+            ArrayList data = savedInstanceState.getParcelableArrayList(KEY_ADAPTER_DATA);
+
+            if (recyclerViewState != null && data != null) {
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+                final BookAdapter adapter = new BookAdapter();
+                adapter.setBooks(data);
+                recyclerView.setAdapter(adapter);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(layoutManager);
+                layoutManager.onRestoreInstanceState(recyclerViewState);
+            }
+        }
 
         return view;
     }
@@ -115,6 +137,14 @@ public class BookSearchFragment extends Fragment {
         adapter.setBooks(books);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(KEY_RECYCLER_VIEW, recyclerView.getLayoutManager().onSaveInstanceState());
+        outState.putParcelableArrayList(KEY_ADAPTER_DATA, (ArrayList)((BookAdapter)recyclerView.getAdapter()).getBooks());
     }
 
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
@@ -215,6 +245,10 @@ public class BookSearchFragment extends Fragment {
             } else {
                 Log.d("MainActivity", "No books");
             }
+        }
+
+        public List<BookSearch> getBooks() {
+            return this.books;
         }
 
         void setBooks(List<BookSearch> books) {
