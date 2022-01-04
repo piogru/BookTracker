@@ -176,7 +176,6 @@ public class BooksFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        selectedDateLayout.setVisibility(View.GONE);
                         clearDateButton.setVisibility(View.GONE);
                         selectedDateTextView.setText(R.string.select_date);
 

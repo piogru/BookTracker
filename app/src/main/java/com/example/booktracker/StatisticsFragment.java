@@ -26,6 +26,9 @@ import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
+    private static final String KEY_SELECTED_DATE_START = "selected_date_start";
+    private static final String KEY_SELECTED_DATE_END = "selected_date_end";
+
     private BookViewModel bookViewModel;
     private List<BookWithAuthors> books;
 
@@ -60,12 +63,11 @@ public class StatisticsFragment extends Fragment {
 
     private Button pickDateButton;
     private TextView selectedDateTextView;
+    private View selectedDateLayout;
 
-    private Long startDate;
-    private Long endDate;
+    Pair dateRange;
 
     public StatisticsFragment() {
-        // Required empty public constructor
         totalBooksStarted = 0;
         totalBooksFinished = 0;
         totalAverageTime = 0;
@@ -194,31 +196,104 @@ public class StatisticsFragment extends Fragment {
         // DatePicker
         pickDateButton = view.findViewById(R.id.pick_date_button);
         selectedDateTextView = view.findViewById(R.id.selected_date);
+        selectedDateLayout = view.findViewById(R.id.selected_date_layout);
+
+        // Invisible clear button - fragment is supposed to always show data from a date range
+        view.findViewById(R.id.clear_date_button).setVisibility(View.GONE);
 
         MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
 
         Long start = MaterialDatePicker.thisMonthInUtcMilliseconds();
         Long end = (start + new Long(cal.getActualMaximum(Calendar.DATE)) * 24 * 3600 * 1000) - 1;
-        Pair<Long, Long> pair = new Pair<>(
+        dateRange = new Pair<>(
                 start,
                 end
         );
 
         materialDateBuilder.setTitleText(getResources().getString(R.string.date_picker_header));
-        materialDateBuilder.setSelection(pair);
+        materialDateBuilder.setSelection(dateRange);
 
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
         String pattern = "MMM DD";
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
-        String date1 = simpleDateFormat.format(new Date(start));
-        String date2 = simpleDateFormat.format(new Date(end));
+        String date1 = simpleDateFormat.format(new Date((Long)dateRange.first));
+        String date2 = simpleDateFormat.format(new Date((Long)dateRange.second));
         String selection = new String(date1 + " - " + date2);
 
-
         selectedDateTextView.setText(selection);
-        view.findViewById(R.id.selected_date_layout).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.clear_date_button).setVisibility(View.GONE);
+        selectedDateLayout.setVisibility(View.VISIBLE);
+
+        if(savedInstanceState != null) {
+            Long startDate = savedInstanceState.getLong(KEY_SELECTED_DATE_START);
+            Long endDate = savedInstanceState.getLong(KEY_SELECTED_DATE_END);
+            dateRange = new Pair<>(
+                    startDate,
+                    endDate
+            );
+
+            if(!((Long)dateRange.first).equals(0L)) {
+                date1 = simpleDateFormat.format(new Date((Long)dateRange.first));
+                date2 = simpleDateFormat.format(new Date((Long)dateRange.second));
+                selection = new String(date1 + " - " + date2);
+
+                selectedDateTextView.setText(selection);
+                selectedDateLayout.setVisibility(View.VISIBLE);
+
+                bookViewModel.findAllBooksWithAuthors().observe(getViewLifecycleOwner(), new Observer<List<BookWithAuthors>>() {
+                    @Override
+                    public void onChanged(List<BookWithAuthors> select) {
+                        books = select;
+                        Date currentDate = new Date();
+
+                        monthlyAverageTime = 0;
+                        monthlyBooksStarted = 0;
+                        monthlyBooksFinished = 0;
+                        monthlyTimeSpent = 0;
+                        monthlyPagesRead = 0;
+
+                        monthlyBooks = new ArrayList<>();
+                        monthlyBookTimes = new ArrayList<>();
+
+                        for(BookWithAuthors book : books) {
+                            Long bookTime = book.book.getStartDate().getTime();
+
+                            if(bookTime.compareTo((Long)dateRange.first) >= 0 && bookTime.compareTo((Long)dateRange.second) <= 0) {
+                                monthlyBooksStarted += 1;
+                            }
+
+                            if(book.book.getEndDate() != null) {
+                                bookTime = book.book.getEndDate().getTime();
+
+                                if(bookTime.compareTo((Long)dateRange.first) >= 0 && bookTime.compareTo((Long)dateRange.second) <= 0) {
+                                    monthlyBooks.add(book);
+                                }
+                            }
+                        }
+
+                        // monthly statistics
+                        for(BookWithAuthors book : monthlyBooks) {
+                            if(book.book.getEndDate() != null) {
+                                monthlyBooksFinished += 1;
+                                monthlyTimeSpent += book.book.getTimeSpent();
+                                monthlyPagesRead += book.book.getPageCount();
+
+                                long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
+                                time = time / 1000 / 60; // time in minutes
+                                monthlyBookTimes.add(time);
+                            }
+                        }
+                        monthlyAverageTime = calculateAverage(monthlyBookTimes);
+
+                        monthlyBooksStartedTextView.setText(String.valueOf(monthlyBooksStarted));
+                        monthlyBooksFinishedTextView.setText(String.valueOf(monthlyBooksFinished));
+                        monthlyAverageTimeTextView.setText(String.valueOf(monthlyAverageTime));
+                        monthlyTimeSpentTextView.setText(String.valueOf(monthlyTimeSpent));
+                        monthlyPagesReadTextView.setText(String.valueOf(monthlyPagesRead));
+                    }
+                });
+            }
+        }
 
         pickDateButton.setOnClickListener(
             new View.OnClickListener() {
@@ -233,7 +308,7 @@ public class StatisticsFragment extends Fragment {
                 @Override
                 public void onPositiveButtonClick(Object selection) {
                     selectedDateTextView.setText(materialDatePicker.getHeaderText());
-                    Pair dateRange = (Pair) selection;
+                    dateRange = (Pair) selection;
 
                     monthlyBooksStarted = 0;
                     monthlyBooksFinished = 0;
@@ -271,14 +346,8 @@ public class StatisticsFragment extends Fragment {
                             monthlyBookTimes.add(time);
                         }
                     }
+
                     monthlyAverageTime = calculateAverage(monthlyBookTimes);
-
-                    monthlyBooksStartedTextView = view.findViewById(R.id.statistics_monthly_books_started);
-                    monthlyBooksFinishedTextView = view.findViewById(R.id.statistics_monthly_books_finished);
-                    monthlyAverageTimeTextView = view.findViewById(R.id.statistics_monthly_average_time);
-                    monthlyTimeSpentTextView = view.findViewById(R.id.statistics_monthly_time_spent);
-                    monthlyPagesReadTextView = view.findViewById(R.id.statistics_monthly_pages_read);
-
                     monthlyBooksStartedTextView.setText(String.valueOf(monthlyBooksStarted));
                     monthlyBooksFinishedTextView.setText(String.valueOf(monthlyBooksFinished));
                     monthlyAverageTimeTextView.setText(String.valueOf(monthlyAverageTime));
@@ -288,5 +357,16 @@ public class StatisticsFragment extends Fragment {
             });
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+        if(dateRange != null) {
+            outState.putLong(KEY_SELECTED_DATE_START, (Long)dateRange.first);
+            outState.putLong(KEY_SELECTED_DATE_END, (Long)dateRange.second);
+        }
     }
 }
