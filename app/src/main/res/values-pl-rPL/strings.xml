@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BookTracker</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="book_title">Tytuł</string>
+    <string name="book_author">Autor</string>
+    <string name="book_cover">Okładka</string>
+    <string name="button_save">Zapisz</string>
+    <string name="button_open_reader">Otwórz czytnik</string>
+    <string name="delete">Usuń</string>
+    <string name="book_not_added">Książka już istnieje</string>
+    <string name="book_added">Dodano książkę</string>
+    <string name="book_edited">Edytowano ksiązkę</string>
+    <string name="book_deleted">Usunięto książkę</string>
+    <string name="book_finished">Zakończono czytanie książki</string>
+    <string name="book_page_count">Ilość stron:</string>
+    <string name="book_date_start">Data rozpoczęcia:</string>
+    <string name="book_date_end">Data zakończenia</string>
+    <string name="book_file_name">Plik PDF:</string>
+    <string name="book_time_spent">Czas czytania:</string>
+    <string name="book_search_hint">Szukaj książek</string>
+    <string name="book_search_failed">Wyszukiwanie nie powiodło się... Spróbuj ponownie później</string>
+    <string name="start_reading">Rozpocznij czytanie</string>
+    <string name="finish_reading">Zakończ czytanie</string>
+    <string name="book_select_pdf">Wybierz PDF</string>
+    <string name="book_finish_title">Zakończ czytanie</string>
+    <string name="book_finish_message">Czy na pewno chcesz zakończyć czytanie książki?</string>
+    <string name="cancel">Anuluj</string>
+    <string name="navigation_books">Książki</string>
+    <string name="navigation_statistics">Statystyki</string>
+    <string name="navigation_new">Nowa</string>
+    <string name="statistics_total_header">Łącznie</string>
+    <string name="statistics_monthly_header">W okresie</string>
+    <string name="statistics_books_started">Książki rozpoczęte</string>
+    <string name="statistics_books_finished">Książki zakończone</string>
+    <string name="statistics_time_spent">Czas czytania</string>
+    <string name="statistics_average_time">Średni czas</string>
+    <string name="statistics_pages_read">Przeczytane strony</string>
+    <string name="clear">Wyczyść</string>
+    <string name="select_date">Wybierz datę</string>
+    <string name="selected_date">Wybrana data</string>
+    <string name="date_picker_header">Wybierz okres</string>
+    <string name="days">Dni</string>
+    <string name="minutes">Minut</string>
+</resources>
