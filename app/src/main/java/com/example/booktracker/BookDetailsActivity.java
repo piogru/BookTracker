@@ -33,6 +33,7 @@ import com.example.booktracker.database.entities.BookWithAuthors;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -102,8 +103,11 @@ public class BookDetailsActivity extends AppCompatActivity {
                 authorTextView.setText(TextUtils.join(", ", book.authors));
                 pageCountTextView.setText(String.valueOf(book.book.getPageCount()));
 
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date d = book.book.getStartDate();
-                startDateTextView.setText(d.toString());
+
+//                startDateTextView.setText(d.toString());
+                startDateTextView.setText(new SimpleDateFormat().format(d));
 
                 timeSpentTextView.setText(String.valueOf(book.book.getTimeSpent()));
 
@@ -119,7 +123,21 @@ public class BookDetailsActivity extends AppCompatActivity {
                 if(book.book.getEndDate() != null) {
                     d = book.book.getEndDate();
                     findViewById(R.id.book_end_date_layout).setVisibility(View.VISIBLE);
-                    endDateTextView.setText(d.toString());
+//                    endDateTextView.setText(d.toString());
+                    endDateTextView.setText(new SimpleDateFormat().format(d));
+
+                    // confirmation dialog
+                    final Button button = findViewById(R.id.button_save);
+                    button.setVisibility(View.VISIBLE);
+
+                    FinishConfirmationDialogFragment confirmationDialog = new FinishConfirmationDialogFragment();
+
+                    button.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            confirmationDialog.show(getSupportFragmentManager(),
+                                    FinishConfirmationDialogFragment.TAG);
+                        }
+                    });
 
                     if(book.book.getFileUri() != null) {
                         selectFileButton.setVisibility(View.GONE);
@@ -190,21 +208,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // confirmation dialog
-        if(!getIntent().hasExtra(EXTRA_BOOK_END_DATE)) {
-            final Button button = findViewById(R.id.button_save);
-            button.setVisibility(View.VISIBLE);
-
-            FinishConfirmationDialogFragment confirmationDialog = new FinishConfirmationDialogFragment();
-
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    confirmationDialog.show(getSupportFragmentManager(),
-                            FinishConfirmationDialogFragment.TAG);
-                }
-            });
-        }
     }
 
     @Override

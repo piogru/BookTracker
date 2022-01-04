@@ -28,7 +28,7 @@
     <string name="book_select_pdf">Select PDF</string>
     <string name="book_finish_title">Finish reading</string>
     <string name="book_finish_message">Are you sure you want to finish reading this book?</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
 
     <!-- menu items -->
@@ -38,7 +38,7 @@
 
 <!--    statistics-->
     <string name="statistics_total_header">Total</string>
-    <string name="statistics_monthly_header">Monthly</string>
+    <string name="statistics_monthly_header">Time span</string>
     <string name="statistics_books_started">Books started</string>
     <string name="statistics_books_finished">Books read</string>
     <string name="statistics_time_spent">Time spent</string>
@@ -50,5 +50,7 @@
     <string name="selected_date">Selected date</string>
 
     <string name="date_picker_header">Select a date range</string>
+    <string name="days">Days</string>
+    <string name="minutes">Minutes</string>
 
 </resources>

@@ -143,6 +143,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_small"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minutes"
                     />
 
             </LinearLayout>
@@ -159,6 +166,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_small"
                     android:text="@string/book_file_name"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/margin_medium"
                     />
 
@@ -172,7 +180,9 @@
                 <Button
                     android:id="@+id/button_edit_file"
                     android:layout_width="@dimen/button_icon"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_icon"
+                    android:layout_gravity="center"
+                    android:padding="0dp"
                     app:icon="@drawable/ic_edit_black_24dp"
                     style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     />

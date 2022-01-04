@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -105,7 +105,7 @@
                             android:id="@+id/statistics_total_books_finished"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -138,7 +138,13 @@
                             android:id="@+id/statistics_total_time_spent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/minutes"
                             />
 
                     </LinearLayout>
@@ -172,7 +178,13 @@
                             android:id="@+id/statistics_total_average_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/minutes"
                             />
 
                     </LinearLayout>
@@ -206,7 +218,7 @@
                             android:id="@+id/statistics_total_pages_read"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
 
                     </LinearLayout>
@@ -222,7 +234,7 @@
                 android:text="@string/statistics_monthly_header"
                 android:textSize="@dimen/text_xl"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_small"
                 />
 
             <include layout="@layout/date_picker"/>
@@ -266,7 +278,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -297,7 +309,7 @@
                             android:id="@+id/statistics_monthly_books_finished"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -330,7 +342,13 @@
                             android:id="@+id/statistics_monthly_time_spent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/minutes"
                             />
 
                     </LinearLayout>
@@ -364,7 +382,13 @@
                             android:id="@+id/statistics_monthly_average_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/minutes"
                             />
 
                     </LinearLayout>
@@ -398,7 +422,7 @@
                             android:id="@+id/statistics_monthly_pages_read"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_small"
+                            android:textSize="@dimen/text_medium"
                             />
 
                     </LinearLayout>
