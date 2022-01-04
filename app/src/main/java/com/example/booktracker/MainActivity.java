@@ -16,11 +16,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     public static final String IMAGE_URL_BASE = "http://covers.openlibrary.org/b/id/";
+    public static final String KEY_CURRENT_FRAGMENT = "current_fragment";
 
+    Fragment currentFragment;
     BottomNavigationView bottomNavigation;
-
-    private BookViewModel bookViewModel;
-    private BookWithAuthors editedBook;
 
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -41,21 +40,41 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.page_books:
-                        openFragment(BooksFragment.newInstance());
-                        return true;
-                    case R.id.page_new:
-                        openFragment(BookSearchFragment.newInstance());
-                        return true;
-                    case R.id.page_statistics:
-                        openFragment(StatisticsFragment.newInstance());
+                        currentFragment = BooksFragment.newInstance();
+                        openFragment(currentFragment);
                         return true;
 
+                    case R.id.page_new:
+                        currentFragment = BookSearchFragment.newInstance();
+                        openFragment(currentFragment);
+                        return true;
+                    case R.id.page_statistics:
+                        currentFragment = StatisticsFragment.newInstance();
+                        openFragment(currentFragment);
+                        return true;
                 }
                 return false;
             }
         });
 
-        openFragment(BooksFragment.newInstance());
+        if(savedInstanceState != null) {
+//            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
+            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
+            openFragment(currentFragment);
+        } else {
+            openFragment(BooksFragment.newInstance());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if(currentFragment != null) {
+            getSupportFragmentManager().putFragment(outState, KEY_CURRENT_FRAGMENT, currentFragment);
+        }
     }
 }
 

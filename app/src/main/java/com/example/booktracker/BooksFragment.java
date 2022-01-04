@@ -49,6 +49,9 @@ import androidx.lifecycle.Observer;
 
 public class BooksFragment extends Fragment {
 
+    private static final String KEY_SELECTED_DATE_START = "selected_date_start";
+    private static final String KEY_SELECTED_DATE_END = "selected_date_end";
+
     BookViewModel bookViewModel;
     BookWithAuthors editedBook;
     List<BookWithAuthors> bookList;
@@ -110,11 +113,55 @@ public class BooksFragment extends Fragment {
                 end
         );
 
-        materialDateBuilder.setTitleText("Select a date range");
+        materialDateBuilder.setTitleText(getResources().getString(R.string.date_picker_header));
         materialDateBuilder.setSelection(pair);
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
         selectedDateTextView.setText(R.string.select_date);
+
+        if(savedInstanceState != null) {
+            //Restore the fragment's state here
+            Long startDate = savedInstanceState.getLong(KEY_SELECTED_DATE_START);
+            Long endDate = savedInstanceState.getLong(KEY_SELECTED_DATE_END);
+
+            if(!startDate.equals(0L)) {
+                dateRange = new Pair<>(
+                        startDate,
+                        endDate
+                );
+
+                String pattern = "MMM DD";
+                SimpleDateFormat simpleDateFormat =new SimpleDateFormat(pattern);
+                String date1 = simpleDateFormat.format(new Date((Long)dateRange.first));
+                String date2 = simpleDateFormat.format(new Date((Long)dateRange.second));
+                String selection = new String(date1 + " - " + date2);
+
+                selectedDateTextView.setText(selection);
+                selectedDateLayout.setVisibility(View.VISIBLE);
+                clearDateButton.setVisibility(View.VISIBLE);
+
+                bookSelection = new ArrayList<>();
+
+                bookViewModel.findAllBooksWithAuthors().observe(getViewLifecycleOwner(), new Observer<List<BookWithAuthors>>() {
+                    @Override
+                    public void onChanged(List<BookWithAuthors> books) {
+                        bookList = books;
+//                        adapter.setBooks(books);
+
+                        for(BookWithAuthors book : bookList) {
+                            Long bookTime = book.book.getStartDate().getTime();
+
+                            if(bookTime.compareTo((Long)dateRange.first) >= 0 && bookTime.compareTo((Long)dateRange.second) <= 0) {
+                                bookSelection.add(book);
+                            }
+                        }
+
+                        adapter.setBooks(bookSelection);
+                    }
+                });
+
+            }
+        }
 
         pickDateButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -132,6 +179,9 @@ public class BooksFragment extends Fragment {
 //                        selectedDateLayout.setVisibility(View.GONE);
                         clearDateButton.setVisibility(View.GONE);
                         selectedDateTextView.setText(R.string.select_date);
+
+                        dateRange = null;
+
                         adapter.setBooks(bookList);
                     }
                 });
@@ -143,7 +193,7 @@ public class BooksFragment extends Fragment {
                         selectedDateTextView.setText(materialDatePicker.getHeaderText());
                         selectedDateLayout.setVisibility(View.VISIBLE);
 
-                        Pair dateRange = (Pair) selection;
+                        dateRange = (Pair) selection;
 
                         bookSelection = new ArrayList<>();
 
@@ -161,6 +211,18 @@ public class BooksFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+        if(dateRange != null) {
+            outState.putLong(KEY_SELECTED_DATE_START, (Long)dateRange.first);
+            outState.putLong(KEY_SELECTED_DATE_END, (Long)dateRange.second);
+        }
+    }
+
 
     private class BookHolder extends RecyclerView.ViewHolder {
         private TextView bookTitleTextView;
