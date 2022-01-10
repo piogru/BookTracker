@@ -71,6 +71,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     private Button editFileButton;
     private Button readFAB;
+    private Button finishReadingButton;
 
     private Date startReading;
     private Date endReading;
@@ -104,6 +105,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         bookCover = findViewById(R.id.book_img_cover);
         expandedCover = findViewById(R.id.expanded_image);
 
+        finishReadingButton = findViewById(R.id.button_save);
         readFAB = findViewById(R.id.fab_read);
         editFileButton = findViewById(R.id.button_edit_file);
 
@@ -188,12 +190,11 @@ public class BookDetailsActivity extends AppCompatActivity {
                 }
                 else {
                     // confirmation dialog
-                    final Button button = findViewById(R.id.button_save);
-                    button.setVisibility(View.VISIBLE);
+                    finishReadingButton.setVisibility(View.VISIBLE);
 
                     FinishConfirmationDialogFragment confirmationDialog = new FinishConfirmationDialogFragment();
 
-                    button.setOnClickListener(new View.OnClickListener() {
+                    finishReadingButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View view) {
                             confirmationDialog.show(getSupportFragmentManager(),
                                     FinishConfirmationDialogFragment.TAG);
@@ -430,6 +431,7 @@ public class BookDetailsActivity extends AppCompatActivity {
             }
         });
         readFAB.setVisibility(View.GONE);
+        finishReadingButton.setVisibility(View.GONE);
         set.start();
         currentAnimator = set;
 
@@ -478,6 +480,9 @@ public class BookDetailsActivity extends AppCompatActivity {
                 set.start();
                 currentAnimator = set;
                 readFAB.setVisibility(View.VISIBLE);
+                if(book.book.getEndDate() == null) {
+                    finishReadingButton.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

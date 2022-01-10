@@ -28,16 +28,14 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="@dimen/button_icon"
                 android:layout_height="@dimen/button_icon"
-                android:paddingStart="12dp"
-                android:gravity="center"
-                android:foregroundTint="@color/secondaryDark"
-                android:drawableTint="@color/secondaryDark"
-                android:tint="@color/secondaryDark"
-                android:padding="0dp"
-                android:textColor="@color/black"
-                app:icon="@drawable/ic_calendar_black_24dp"
                 android:layout_marginEnd="@dimen/margin_small"
-                />
+                android:drawableTint="@color/white"
+                android:gravity="center"
+                android:padding="0dp"
+                android:paddingStart="12dp"
+                android:textColor="@color/black"
+                android:tint="@color/secondaryDark"
+                app:icon="@drawable/ic_calendar_black_24dp" />
 
             <TextView
                 android:id="@+id/selected_date"
