@@ -177,11 +177,15 @@
             />
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <Button
         android:id="@+id/button_read"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
         android:visibility="gone"
         android:text="@string/button_open_reader"
         android:layout_marginBottom="@dimen/margin_small"
@@ -192,7 +196,6 @@
         android:id="@+id/button_select_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
         app:icon="@drawable/ic_read_black_24dp"
         android:text="@string/book_select_pdf"
         android:layout_marginBottom="@dimen/margin_small"
@@ -203,7 +206,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:background="@color/purple_200"
         android:text="@string/finish_reading"
         app:icon="@drawable/ic_finish_black_24dp"
         />

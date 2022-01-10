@@ -13,6 +13,9 @@
         android:textSize="@dimen/text_xl"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_small"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:foregroundGravity="center_horizontal"
         style="@style/TextAppearance.BookTracker.Title"
         />
 
@@ -81,11 +84,16 @@
             />
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <Button
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/purple_200"
+        android:layout_marginBottom="@dimen/margin_large"
         android:text="@string/start_reading"
         />
 </LinearLayout>
