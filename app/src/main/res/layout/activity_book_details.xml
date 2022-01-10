@@ -15,6 +15,7 @@
         android:textSize="@dimen/text_xl"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_small"
+        style="@style/TextAppearance.BookTracker.Title"
         />
 
     <ImageView

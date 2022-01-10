@@ -14,28 +14,42 @@
         android:layout_alignParentBottom="true"
         />
 
-    <TextView
-        android:id="@+id/book_title"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center_vertical"
-        android:text="@string/book_title"
-        android:paddingHorizontal="@dimen/mini_padding"
-        android:textSize="@dimen/text_large" />
+        android:orientation="vertical"
+        android:paddingStart="@dimen/small_padding">
 
-    <TextView
-        android:id="@+id/book_author"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
+        <TextView
+            android:id="@+id/book_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@string/book_title"
+            android:paddingHorizontal="@dimen/mini_padding"
+            android:textSize="@dimen/text_large" />
+
+        <TextView
+            android:id="@+id/book_author"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="@string/book_author"
+            android:paddingTop="@dimen/mini_padding"
+            android:paddingHorizontal="@dimen/mini_padding"
+            android:textSize="@dimen/text_small" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/book_author"
-        android:paddingTop="@dimen/mini_padding"
-        android:paddingHorizontal="@dimen/mini_padding"
-        android:textSize="@dimen/text_small" />
+        android:paddingEnd="@dimen/small_padding"
+        android:foregroundGravity="center_vertical"
+        />
 </RelativeLayout>

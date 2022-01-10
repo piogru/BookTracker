@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -92,6 +94,7 @@ public class BooksFragment extends Fragment {
             @Override
             public void onChanged(List<BookWithAuthors> books) {
                 bookList = books;
+                Collections.sort(bookList);
                 adapter.setBooks(books);
             }
         });
@@ -226,6 +229,7 @@ public class BooksFragment extends Fragment {
     private class BookHolder extends RecyclerView.ViewHolder {
         private TextView bookTitleTextView;
         private TextView bookAuthorTextView;
+        private ImageView iconImageView;
         private BookWithAuthors book;
 
         public BookHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -233,6 +237,7 @@ public class BooksFragment extends Fragment {
 
             bookTitleTextView = itemView.findViewById(R.id.book_title);
             bookAuthorTextView = itemView.findViewById(R.id.book_author);
+            iconImageView = itemView.findViewById(R.id.icon);
             View bookItem = itemView.findViewById(R.id.book_item);
 
 
@@ -282,6 +287,12 @@ public class BooksFragment extends Fragment {
         public void bind(BookWithAuthors book) {
             bookTitleTextView.setText(book.book.getTitle());
             bookAuthorTextView.setText(TextUtils.join(", ", book.authors));
+            if(book.book.getEndDate() != null) {
+                iconImageView.setImageResource(R.drawable.ic_check_box_24dp);
+            } else {
+                iconImageView.setImageResource(R.drawable.ic_check_box_outline_24dp);
+            }
+
             this.book = book;
         }
     }

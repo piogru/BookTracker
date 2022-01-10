@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity(tableName = "book",
         indices = {@Index(value = {"title"}, unique = true)})
-public class Book {
+public class Book implements Comparable<Book> {
 
     @PrimaryKey(autoGenerate = true)
     private Long bookId;
@@ -91,6 +91,12 @@ public class Book {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
+    }
+
+    @Override
+    public int compareTo(Book o) {
+//        return getStartDate().compareTo(o.getStartDate());
+        return o.getStartDate().compareTo(getStartDate());
     }
 
     public Book(String title, int pageCount, Date startDate, String cover, String fileUri) {

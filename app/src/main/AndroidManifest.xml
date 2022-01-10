@@ -15,7 +15,9 @@
         android:usesCleartextTraffic="true" >
         <activity
             android:name=".BookReaderActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.BookTracker.NoActionBar"
+        />
         <activity
             android:name=".BookDetailsActivity"
             android:exported="true"

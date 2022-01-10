@@ -143,8 +143,10 @@ public class BookSearchFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelable(KEY_RECYCLER_VIEW, recyclerView.getLayoutManager().onSaveInstanceState());
-        outState.putParcelableArrayList(KEY_ADAPTER_DATA, (ArrayList)((BookAdapter)recyclerView.getAdapter()).getBooks());
+        if(recyclerView.getLayoutManager() != null) {
+            outState.putParcelable(KEY_RECYCLER_VIEW, recyclerView.getLayoutManager().onSaveInstanceState());
+            outState.putParcelableArrayList(KEY_ADAPTER_DATA, (ArrayList) ((BookAdapter) recyclerView.getAdapter()).getBooks());
+        }
     }
 
     ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(

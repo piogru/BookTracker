@@ -6,7 +6,7 @@ import androidx.room.Relation;
 
 import java.util.List;
 
-public class BookWithAuthors {
+public class BookWithAuthors implements Comparable<BookWithAuthors> {
     @Embedded
     public Book book;
     @Relation(
@@ -16,4 +16,8 @@ public class BookWithAuthors {
     )
     public List<Author> authors;
 
+    @Override
+    public int compareTo(BookWithAuthors o) {
+        return book.compareTo(o.book);
+    }
 }

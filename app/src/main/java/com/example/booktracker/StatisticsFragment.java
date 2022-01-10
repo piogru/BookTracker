@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class StatisticsFragment extends Fragment {
@@ -44,8 +45,8 @@ public class StatisticsFragment extends Fragment {
     private int monthlyTimeSpent;
     private int monthlyPagesRead;
 
-    private List<Long> totalBookTimes;
-    private List<Long> monthlyBookTimes;
+    private List<Integer> totalBookTimes;
+    private List<Integer> monthlyBookTimes;
 
     private List<BookWithAuthors> monthlyBooks;
 
@@ -90,15 +91,26 @@ public class StatisticsFragment extends Fragment {
         return fragment;
     }
 
-    private int calculateAverage(List<Long> times) {
-        Long sum = 0L;
+//    private int calculateAverage(List<Long> times) {
+//        Long sum = 0L;
+//        if(!times.isEmpty()) {
+//            for (Long time : times) {
+//                sum += time;
+//            }
+//            return (int)sum.doubleValue() / times.size();
+//        }
+//        return sum.intValue();
+//    }
+    private int calculateAverage(List times) {
+        int sum = 0;
+
         if(!times.isEmpty()) {
-            for (Long time : times) {
-                sum += time;
+            for (int i = 0; i < times.size(); i++) {
+                sum += (int)times.get(i);
             }
-            return (int)sum.doubleValue() / times.size();
+            return sum / times.size();
         }
-        return sum.intValue();
+        return sum;
     }
 
     @Override
@@ -140,9 +152,10 @@ public class StatisticsFragment extends Fragment {
                         totalTimeSpent += book.book.getTimeSpent();
                         totalPagesRead += book.book.getPageCount();
 
-                        long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
-                        time = time / 1000 / 60; // time in minutes
-                        totalBookTimes.add(time);
+//                        long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
+//                        time = time / 1000 / 60; // time in minutes
+//                        totalBookTimes.add(time);
+                        totalBookTimes.add(book.book.getTimeSpent());
 
                         cal.setTime(book.book.getEndDate());
                         bookMonth = cal.get(Calendar.MONTH);
@@ -172,9 +185,11 @@ public class StatisticsFragment extends Fragment {
                         monthlyTimeSpent += book.book.getTimeSpent();
                         monthlyPagesRead += book.book.getPageCount();
 
-                        long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
-                        time = time / 1000 / 60; // time in minutes
-                        monthlyBookTimes.add(time);
+//                        long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
+//                        time = time / 1000 / 60; // time in minutes
+//                        monthlyBookTimes.add(time);
+
+                        monthlyBookTimes.add(book.book.getTimeSpent());
                     }
                 }
                 monthlyAverageTime = calculateAverage(monthlyBookTimes);
@@ -278,9 +293,10 @@ public class StatisticsFragment extends Fragment {
                                 monthlyTimeSpent += book.book.getTimeSpent();
                                 monthlyPagesRead += book.book.getPageCount();
 
-                                long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
-                                time = time / 1000 / 60; // time in minutes
-                                monthlyBookTimes.add(time);
+//                                long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
+//                                time = time / 1000 / 60; // time in minutes
+//                                monthlyBookTimes.add(time);
+                                monthlyBookTimes.add(book.book.getTimeSpent());
                             }
                         }
                         monthlyAverageTime = calculateAverage(monthlyBookTimes);
@@ -341,9 +357,10 @@ public class StatisticsFragment extends Fragment {
                             monthlyTimeSpent += book.book.getTimeSpent();
                             monthlyPagesRead += book.book.getPageCount();
 
-                            long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
-                            time = time / 1000 / 60; // time in minutes
-                            monthlyBookTimes.add(time);
+//                            long time = book.book.getEndDate().getTime() - book.book.getStartDate().getTime();
+//                            time = time / 1000 / 60; // time in minutes
+//                            monthlyBookTimes.add(time);
+                            monthlyBookTimes.add(book.book.getTimeSpent());
                         }
                     }
 
