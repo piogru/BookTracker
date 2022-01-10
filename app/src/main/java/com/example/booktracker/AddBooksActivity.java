@@ -16,7 +16,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.booktracker.database.AuthorViewModel;
 import com.example.booktracker.database.BookAuthorRepository;
 import com.example.booktracker.database.entities.Author;
 import com.example.booktracker.database.entities.Book;
