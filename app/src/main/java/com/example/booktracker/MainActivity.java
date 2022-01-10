@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(savedInstanceState != null) {
-//            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, KEY_CURRENT_FRAGMENT);
             openFragment(currentFragment);
         } else {

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.booktracker.database.BookViewModel;
 import com.example.booktracker.database.entities.BookWithAuthors;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -60,9 +61,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView fileNameTextView;
     private ImageView bookCover;
 
-    private Button readButton;
-    private Button selectFileButton;
     private Button editFileButton;
+    private Button readFAB;
 
     private Date startReading;
     private Date endReading;
@@ -86,8 +86,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         fileNameTextView = findViewById(R.id.book_file_name);
 
         bookCover = findViewById(R.id.book_img_cover);
-        readButton = findViewById(R.id.button_read);
-        selectFileButton = findViewById(R.id.button_select_file);
+        readFAB = findViewById(R.id.fab_read);
         editFileButton = findViewById(R.id.button_edit_file);
 
         bookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);
@@ -105,10 +104,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date d = book.book.getStartDate();
-
-//                startDateTextView.setText(d.toString());
                 startDateTextView.setText(new SimpleDateFormat().format(d));
-
                 timeSpentTextView.setText(String.valueOf(book.book.getTimeSpent()));
 
                 if (book.book.getCover() != null) {
@@ -123,17 +119,36 @@ public class BookDetailsActivity extends AppCompatActivity {
                 if(book.book.getEndDate() != null) {
                     d = book.book.getEndDate();
                     findViewById(R.id.book_end_date_layout).setVisibility(View.VISIBLE);
-//                    endDateTextView.setText(d.toString());
                     endDateTextView.setText(new SimpleDateFormat().format(d));
 
                     if(book.book.getFileUri() != null) {
-                        selectFileButton.setVisibility(View.GONE);
-                        readButton.setVisibility(View.VISIBLE);
                         editFileButton.setVisibility(View.GONE);
+
+                        readFAB.setText(getResources().getString(R.string.button_open_reader));
+                        readFAB.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View view) {
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    action = "read";
+                                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                                } else {
+                                    openFile();
+                                }
+                            }
+                        });
                     } else {
-                        selectFileButton.setVisibility(View.GONE);
-                        readButton.setVisibility(View.GONE);
                         editFileButton.setVisibility(View.GONE);
+
+                        readFAB.setText(getResources().getString(R.string.book_select_pdf));
+                        readFAB.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View view) {
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    action = "select";
+                                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                                } else {
+                                    openFile();
+                                }
+                            }
+                        });
                     }
                 }
                 else {
@@ -150,17 +165,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    selectFileButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View view) {
-                            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                action = "select";
-                                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
-                            } else {
-                                openFile();
-                            }
-                        }
-                    });
-
                     editFileButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View view) {
                             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -173,13 +177,35 @@ public class BookDetailsActivity extends AppCompatActivity {
                     });
 
                     if(book.book.getFileUri() != null) {
-                        selectFileButton.setVisibility(View.GONE);
-                        readButton.setVisibility(View.VISIBLE);
-                        editFileButton.setVisibility(View.VISIBLE);
-                    } else {
-                        selectFileButton.setVisibility(View.VISIBLE);
-                        readButton.setVisibility(View.GONE);
                         editFileButton.setVisibility(View.GONE);
+
+                        readFAB.setText(getResources().getString(R.string.button_open_reader));
+                        readFAB.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View view) {
+                                startReading = new Date();
+
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    action = "read";
+                                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                                } else {
+                                    beginReading();
+                                }
+                            }
+                        });
+                    } else {
+                        editFileButton.setVisibility(View.GONE);
+
+                        readFAB.setText(getResources().getString(R.string.book_select_pdf));
+                        readFAB.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View view) {
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    action = "select";
+                                    requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_READ_EXTERNAL_STORAGE);
+                                } else {
+                                    openFile();
+                                }
+                            }
+                        });
                     }
                 }
 
@@ -193,7 +219,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
                     fileNameTextView.setText(returnCursor.getString(nameIndex));
 
-                    readButton.setOnClickListener(new View.OnClickListener() {
+                    readFAB.setContentDescription(getResources().getString(R.string.button_open_reader));
+                    readFAB.setText(getResources().getString(R.string.button_open_reader));
+                    readFAB.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View view) {
                             startReading = new Date();
 
@@ -218,6 +246,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 if(action == "select") {
                     openFile();
                 } else {
+                    startReading = new Date();
                     beginReading();
                 }
 
@@ -249,7 +278,13 @@ public class BookDetailsActivity extends AppCompatActivity {
                         endReading = new Date();
                         Long timeDiff = (endReading.getTime() - startReading.getTime()) / 1000 / 60;
 
-                        Toast.makeText(BookDetailsActivity.this, "Time reading: " + String.valueOf(timeDiff) + " minutes", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(BookDetailsActivity.this, getResources().getQuantityString(R.plurals.time_reading, timeDiff.intValue()), Toast.LENGTH_LONG).show();
+
+                        Snackbar.make(findViewById(R.id.details_coordinator_layout),
+                                getResources().getQuantityString(R.plurals.time_reading, timeDiff.intValue(), timeDiff.intValue()),
+                                Snackbar.LENGTH_LONG)
+                                .setAnchorView(R.id.fab_read)
+                                .show();
 
                         book.book.setTimeSpent(book.book.getTimeSpent() + timeDiff.intValue());
                         book.book.setCurrentPage(result.getData().getIntExtra(BookReaderActivity.EXTRA_CURRENT_PAGE, 0));

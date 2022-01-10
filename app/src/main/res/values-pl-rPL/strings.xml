@@ -42,4 +42,12 @@
     <string name="days">Dni</string>
     <string name="minutes">Minut</string>
     <string name="notification_text">Czytasz:</string>
+<!--    <string name="time_reading">Czas czytania: %d minut</string>-->
+    <plurals name="time_reading">
+        <item quantity="zero" formatted="true">Czas czytania: %1d minut</item>
+        <item quantity="one" formatted="true">Czas czytania: %1d minuta</item>
+        <item quantity="few" formatted="true">Czas czytania: %1d minuty</item>
+        <item quantity="other" formatted="true">Czas czytania: %1d minut</item>
+        <item quantity="many" formatted="true">Czas czytania: %1d minut</item>
+    </plurals>
 </resources>

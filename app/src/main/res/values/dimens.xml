@@ -13,5 +13,6 @@
     <dimen name="margin_small">5dp</dimen>
 
     <dimen name="button_wide">250dp</dimen>
-    <dimen name="button_icon">24dp</dimen>
+<!--    <dimen name="button_icon">24dp</dimen>-->
+    <dimen name="button_icon">48dp</dimen>
 </resources>

@@ -15,8 +15,8 @@
     <string name="book_deleted">Book deleted</string>
     <string name="book_finished">Finished reading book</string>
     <string name="book_page_count">Page count: </string>
-    <string name="book_date_start">Start date: </string>
-    <string name="book_date_end">End date: </string>
+    <string name="book_date_start">Start date:</string>
+    <string name="book_date_end">End date</string>
     <string name="book_file_name">PDF file: </string>
     <string name="book_time_spent">Reading time: </string>
 
@@ -57,5 +57,13 @@
     <string name="channel_description" translatable="false">Channel description</string>
 
     <string name="notification_text">Reading: </string>
+<!--    <string name="time_reading">Time reading: %d minutes</string>-->
+    <plurals name="time_reading">
+        <item quantity="zero" formatted="true">Time reading: %1d minutes</item>
+        <item quantity="one" formatted="true">Time reading: %1d minute</item>
+        <item quantity="few" formatted="true">Time reading: %1d minutes</item>
+        <item quantity="other" formatted="true">Time reading: %1d minutes</item>
+    </plurals>
+
 
 </resources>
