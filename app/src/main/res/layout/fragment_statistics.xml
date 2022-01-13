@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/statistics_books_started"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -99,14 +99,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_books_finished"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_total_books_finished"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -132,14 +132,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_time_spent"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_total_time_spent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -172,14 +172,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_average_time"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_total_average_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -212,14 +212,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_pages_read"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_total_pages_read"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                     </LinearLayout>
@@ -271,7 +271,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/statistics_books_started"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -279,7 +279,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -303,14 +303,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_books_finished"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_monthly_books_finished"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -336,14 +336,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_time_spent"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_monthly_time_spent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -376,14 +376,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_average_time"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_monthly_average_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
@@ -416,14 +416,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/statistics_pages_read"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                         <TextView
                             android:id="@+id/statistics_monthly_pages_read"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_medium"
+                            android:textSize="@dimen/text_small"
                             />
 
                     </LinearLayout>

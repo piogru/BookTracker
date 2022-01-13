@@ -66,9 +66,7 @@ public class BookReaderActivity extends AppCompatActivity {
         createNotificationChannel();
         Resources resources = getResources();
         Intent notificationIntent = new Intent(this, BookReaderActivity.class);
-        notificationIntent.setAction(Intent.ACTION_MAIN);
-        notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         notificationIntent.putExtra(EXTRA_FILE_URI, intent.getStringExtra(EXTRA_FILE_URI));
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -111,8 +109,8 @@ public class BookReaderActivity extends AppCompatActivity {
             NotificationChannel channel = new NotificationChannel("BOOK_READER_CHANNEL", name, importance);
             channel.setDescription(description);
             channel.setSound(null, null);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+
+            // Register the channel with the system;
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

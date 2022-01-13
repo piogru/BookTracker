@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_xl"
+
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             style="@style/TextAppearance.BookTracker.Title"
@@ -28,6 +29,7 @@
             android:id="@+id/book_img_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxHeight="180dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:contentDescription="@string/book_cover"
@@ -163,9 +165,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_small"
             android:visibility="gone"
             >
 
