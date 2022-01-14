@@ -1,8 +1,14 @@
 package com.example.booktracker;
 
+import static com.example.booktracker.MainActivity.IMAGE_URL_BASE;
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -12,11 +18,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -38,6 +46,7 @@ import com.example.booktracker.database.entities.BookWithAuthors;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -316,12 +325,24 @@ public class BooksFragment extends Fragment {
                             .show();
                 } else if (result.getResultCode() == 200) {
                     Date endDate = new Date();
-                    editedBook.book.setEndDate(endDate);
-                    bookViewModel.update(editedBook.book);
-                    Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
-                            Snackbar.LENGTH_LONG)
-                            .setAnchorView(R.id.bottom_navigation)
-                            .show();
+
+                    LiveData bookLiveData = bookViewModel.findBookWithTitle(editedBook.book.getTitle());
+                    Observer observer = new Observer<BookWithAuthors>() {
+                        @Override
+                        public void onChanged(BookWithAuthors select) {
+                            bookLiveData.removeObservers(getActivity());
+
+                            editedBook = select;
+                            editedBook.book.setEndDate(endDate);
+                            bookViewModel.update(editedBook.book);
+                            Snackbar.make(activity.findViewById(R.id.coordinator_layout), getString(R.string.book_finished),
+                                    Snackbar.LENGTH_LONG)
+                                    .setAnchorView(R.id.bottom_navigation)
+                                    .show();
+                        }
+                    };
+
+                    bookLiveData.observe(getActivity(), observer);
                 }
             }
         });

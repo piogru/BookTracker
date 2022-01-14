@@ -213,7 +213,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                     });
 
                     if(book.book.getFileUri() != null) {
-                        editFileButton.setVisibility(View.GONE);
+                        editFileButton.setVisibility(View.VISIBLE);
 
                         readFAB.setText(getResources().getString(R.string.button_open_reader));
                         readFAB.setOnClickListener(new View.OnClickListener() {
@@ -313,8 +313,6 @@ public class BookDetailsActivity extends AppCompatActivity {
                     if (result.getResultCode() == 300) {
                         endReading = new Date();
                         Long timeDiff = (endReading.getTime() - startReading.getTime()) / 1000 / 60;
-
-//                        Toast.makeText(BookDetailsActivity.this, getResources().getQuantityString(R.plurals.time_reading, timeDiff.intValue()), Toast.LENGTH_LONG).show();
 
                         Snackbar.make(findViewById(R.id.details_coordinator_layout),
                                 getResources().getQuantityString(R.plurals.time_reading, timeDiff.intValue(), timeDiff.intValue()),
