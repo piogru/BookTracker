@@ -125,7 +125,8 @@ public class BookDetailsActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date d = book.book.getStartDate();
                 startDateTextView.setText(new SimpleDateFormat().format(d));
-                timeSpentTextView.setText(String.valueOf(book.book.getTimeSpent()));
+//                timeSpentTextView.setText(String.valueOf(book.book.getTimeSpent()));
+                timeSpentTextView.setText(getResources().getQuantityString(R.plurals.time_reading, book.book.getTimeSpent(), book.book.getTimeSpent()));
 
                 if (book.book.getCover() != null) {
                     Picasso.with(getApplicationContext())

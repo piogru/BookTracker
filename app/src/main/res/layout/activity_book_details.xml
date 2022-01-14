@@ -98,13 +98,13 @@
             android:layout_marginBottom="@dimen/margin_medium"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_small"
-                android:text="@string/book_time_spent"
-                android:layout_marginEnd="@dimen/margin_medium"
-                />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="@dimen/text_small"-->
+<!--                android:text="@string/book_time_spent"-->
+<!--                android:layout_marginEnd="@dimen/margin_medium"-->
+<!--                />-->
 
             <TextView
                 android:id="@+id/book_time_spent"
@@ -114,11 +114,11 @@
                 android:layout_marginEnd="@dimen/margin_small"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/minutes"
-                />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{@plurals/}"-->
+<!--                />-->
 
         </LinearLayout>
 
